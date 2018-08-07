@@ -84,7 +84,7 @@ void input(mi &m)
 void print(mi m)
 {	textcolor(15); textbackground(0);
 	clrscr();
-	hbox(2,2,79,24,"Û",7,1,0);
+	hbox(2,2,79,24,"Ã›",7,1,0);
 	int l=strlen(m.mobnm);
 	l=(80-l)/2; textcolor(15); textbackground(0);
 	gotoxy(l,5); cprintf(m.mobnm);
@@ -199,11 +199,11 @@ void read(char s[])
 	while(1)
 	{	int l=strlen(s);
 		l=(80-((l*5)+l-1))/2;
-		fbox(2,2,79,24,"Û",7,1,0);
-		hbox(2,2,79,24,"Û",15,0,0);
+		fbox(2,2,79,24,"Ã›",7,1,0);
+		hbox(2,2,79,24,"Ã›",15,0,0);
 		lcon(s,l,4,0,15);
-		fbox(11,3,78,20,"Û",0,1,0);
-		fbox(21,3,78,23,"Û",7,1,0);
+		fbox(11,3,78,20,"Ã›",0,1,0);
+		fbox(21,3,78,23,"Ã›",7,1,0);
 		if(t==0)
 		{ 	textcolor(15); textbackground(0);
 			gotoxy(5,12); cprintf("SORRY! NO SMART PHONES IN THIS CATEGORY. PRESS ANY KEY TO RETURN BACK");
@@ -262,19 +262,19 @@ void read(char s[])
 }
 
 void addrec()
-{    	fbox(3,3,78,23,"Û",6,1);
-	fbox(3,3,78,10,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+{    	fbox(3,3,78,23,"Ã›",6,1);
+	fbox(3,3,78,10,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("add",18,4,10,6);
 	lcon("data",40,4,10,6);
 	mi m;
 	ptext("data\\text\\addguide.dat",14,7,14);
 	getch();
-	fbox(12,3,78,23,"Û",6,1,0);
+	fbox(12,3,78,23,"Ã›",6,1,0);
 	ofstream fout("data\\text\\mobinfo.dat",ios::binary|ios::app);
 	input(m);
 	fout.write( (char*) &m, sizeof(m) );
-	fbox(12,3,78,23,"Û",6,1,0);
+	fbox(12,3,78,23,"Ã›",6,1,0);
 	textcolor(14); textbackground(14);
 	gotoxy(25,19);
 	cprintf("\nMobile Info added successfully");
@@ -283,13 +283,13 @@ void addrec()
 	return;
 }
 void modrec()
-{    	fbox(3,3,78,23,"Û",6,1);
-	fbox(3,3,78,10,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+{    	fbox(3,3,78,23,"Ã›",6,1);
+	fbox(3,3,78,10,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("modify",8,4,10,6);
 	lcon("data",50,4,10,6);
 	ptext("data\\text\\modguide.dat",14,7,14);
-	getch(); fbox(12,3,78,23,"Û",6,1,0);
+	getch(); fbox(12,3,78,23,"Ã›",6,1,0);
 	fstream file("data\\text\\mobinfo.dat",ios::in|ios::out|ios::binary);
 	mi m,m2;
 	input(m2);
@@ -341,7 +341,7 @@ void modrec()
 			int l=-sizeof(m);
 			file.seekg(l,ios::cur);
 			file.write( (char*) &m2, sizeof(m2) );
-			fbox(12,3,78,23,"Û",6,1,0);
+			fbox(12,3,78,23,"Ã›",6,1,0);
 			textcolor(14); textbackground(14);
 			gotoxy(25,19);
 			cprintf("\nMobile Info modified successfully...");
@@ -350,7 +350,7 @@ void modrec()
 			return;
 		}
 	}
-	fbox(12,3,78,23,"Û",6,1,0);
+	fbox(12,3,78,23,"Ã›",6,1,0);
 	textcolor(14); textbackground(14);
 	gotoxy(33,19);
 	cprintf("MOBILE NOT FOUND");
@@ -372,11 +372,11 @@ void readno(int a[])
 		fin.close();
 	}
 	while(1)
-	{	fbox(2,2,79,24,"Û",7,1,0);
-		hbox(2,2,79,24,"Û",15,0,0);
+	{	fbox(2,2,79,24,"Ã›",7,1,0);
+		hbox(2,2,79,24,"Ã›",15,0,0);
 		lcon("filter",23,4,0,15);
-		fbox(11,3,78,20,"Û",0,1,0);
-		fbox(21,3,78,23,"Û",7,1,0);
+		fbox(11,3,78,20,"Ã›",0,1,0);
+		fbox(21,3,78,23,"Ã›",7,1,0);
 		textcolor(15); textbackground(0);
 		for(i=0 ; a[i]!=10 ; i++)
 		{ 	if(i>15)
