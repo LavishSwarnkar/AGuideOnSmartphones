@@ -59,27 +59,27 @@ void input(id &i1)
 	gotoxy(9,18);
 	cprintf("ENTER USERNAME:                      ");
 	gotoxy(26,18); gets(s); i1.giveun(s);
-	fbox(17,8,70,19,"Û",1,0,0);
+	fbox(17,8,70,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18);
 	cprintf("ENTER PASSWORD:                        ");
 	gotoxy(25,18); gets(s); i1.givepass(s);
-	fbox(16,8,70,19,"Û",1,0,0);
+	fbox(16,8,70,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18);
 	cprintf("ENTER EMAIL ID:                                          ");
 	gotoxy(25,18);  gets(s); i1.giveemail(s);
-	fbox(16,8,70,19,"Û",1,0,0);
+	fbox(16,8,70,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18);
 	cprintf("ENTER MOBILE NO:                          ");
 	gotoxy(26,18);  gets(s); i1.givemono(s);
-	fbox(16,8,70,19,"Û",1,0,0);
+	fbox(16,8,70,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18);
 	cprintf("ENTER HINT QUESTION:                         ");
 	gotoxy(30,18);  gets(s); i1.givehintq(s);
-	fbox(16,8,70,19,"Û",1,0,0);
+	fbox(16,8,70,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18);
 	cprintf("ENTER HINT QUESTION'S ANSWER:                                         "); 
@@ -90,23 +90,23 @@ void print(id i1)
 	textcolor(15); textbackground(1);
 	gotoxy(9,20);
 	cprintf("USERNAME: "); cprintf(i1.getun()); getch();
-	fbox(20,8,72,21,"Û",1,0,0);
+	fbox(20,8,72,21,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,20);
 	cprintf("PASSWORD: "); cprintf(i1.getpass()); getch();
-	fbox(20,8,72,21,"Û",1,0,0);
+	fbox(20,8,72,21,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,20);
 	cprintf("EMAIL ID: "); cprintf(i1.getemail()); getch();
-	fbox(20,8,72,21,"Û",1,0,0);
+	fbox(20,8,72,21,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,20);
 	cprintf("MOBILE NO: "); cprintf(i1.getmono()); getch();
-	fbox(20,8,72,21,"Û",1,0,0);
+	fbox(20,8,72,21,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,20);
 	cprintf("HINT QUESTION: "); cprintf(i1.gethintq()); getch();
-	fbox(20,8,72,21,"Û",1,0,0);
+	fbox(20,8,72,21,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,20);
 	cprintf("HINT QUESTION'S ANSWER: "); cprintf(i1.gethinta());
@@ -182,7 +182,7 @@ void admin()
 	char s2[50]= "> DELETE ALL THE ACCOUNTS DATA" ;
 	char k='0';
 	int ch=1,f=0;
-	fbox(12,3,78,23,"Û",1,0);
+	fbox(12,3,78,23,"Ã›",1,0);
 	textcolor(0); textbackground(14);
 	hbox(12,29,51,14,"*",15,1);
 	hbox(14,7,74,22,"*",15,1);
@@ -203,7 +203,7 @@ void admin()
 			ch+=1;
 
 		else if(k=='c'||k=='C'||k==13)
-		{   	fbox(12,3,78,23,"Û",1,0,0);
+		{   	fbox(12,3,78,23,"Ã›",1,0,0);
 			hbox(12,26,55,14,"*",15,1);
 			textcolor(15); textbackground(1);
 			switch(ch)
@@ -219,7 +219,7 @@ void admin()
 			return;
     if(f)
     {
-		fbox(12,3,78,23,"Û",1,0,0);
+		fbox(12,3,78,23,"Ã›",1,0,0);
 		hbox(12,29,51,14,"*",15,1,0);
 		hbox(14,7,74,22,"*",15,1,0);
 		gotoxy(31,13); cprintf(">> ADMINISTRATOR <<");
@@ -272,11 +272,11 @@ void loginsub()
 	textcolor(15);	textbackground(1);
 	gotoxy(27,13); cprintf(">> LOGIN TO  YOUR ACCOUNT <<");
 	id i1,i2;
-	fbox(16,8,72,19,"Û",1,0,0);
+	fbox(16,8,72,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18); cprintf("ENTER YOUR USERNAME:                       ");
 	gotoxy(30,18); gets(i1.getun());
-	fbox(16,8,72,19,"Û",1,0,0);
+	fbox(16,8,72,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18); cprintf("ENTER YOUR PASSWORD:                         ");
 	gotoxy(30,18);
@@ -303,14 +303,14 @@ void cp()
 {	hbox(12,26,55,14,"*",15,1);
 	hbox(14,7,74,22,"*",15,1);
 	textcolor(15);	textbackground(1);
-	fbox(16,8,72,19,"Û",1,0,0);
+	fbox(16,8,72,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(28,13);
 	cprintf(">> CHANGE YOUR PASSWORD <<");
 	id i1,i2;
 	int j;
 	char s[30],s2[20];
-	fbox(16,8,72,19,"Û",1,0,0);
+	fbox(16,8,72,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18);
 	cprintf("ENTER YOUR USERNAME:                          ");
@@ -321,12 +321,12 @@ void cp()
 		cprintf("USERNAME DOES NOT EXISTS! TRY AGAIN..");
 	}
 	else
-	{      	fbox(16,8,72,19,"Û",1,0,0);
+	{      	fbox(16,8,72,19,"Ã›",1,0,0);
 		textcolor(15); textbackground(1);
 		gotoxy(9,18);
 		cprintf("ENTER YOUR OLD PASSWORD:                             ");
 		gotoxy(34,18);	gets(s); i1.givepass(s);
-		fbox(16,8,72,19,"Û",1,0,0);
+		fbox(16,8,72,19,"Ã›",1,0,0);
 		textcolor(15); textbackground(1);
 		gotoxy(9,18);
 		cprintf("ENTER YOUR NEW PASSWORD:                      ");
@@ -341,7 +341,7 @@ void cp()
 				int p=-sizeof(i1);
 				file.seekg(p,ios::cur);
 				file.write( (char *)&i2,sizeof(i2) );
-				fbox(16,8,72,19,"Û",1,0,0);
+				fbox(16,8,72,19,"Ã›",1,0,0);
 				textcolor(15); textbackground(1);
 				gotoxy(9,18);
 				cprintf("PASSWORD CHANGED SUCCESSFULLY! ");
@@ -368,14 +368,14 @@ void fp()
 	gotoxy(29,13); cprintf(">> RESET YOUR PASSWORD <<");
 	id i1,i2;
 	char s[20];
-	fbox(16,8,70,19,"Û",1,0,0);
+	fbox(16,8,70,19,"Ã›",1,0,0);
 	textcolor(15); textbackground(1);
 	gotoxy(9,18);
 	cprintf("ENTER YOUR USERNAME: ");
 	gets(s); i1.giveun(s);
 
 	if(acchk(i1.getun())==0)
-	{	fbox(16,8,70,19,"Û",1,0,0);
+	{	fbox(16,8,70,19,"Ã›",1,0,0);
 		textcolor(15); textbackground(1);
 		gotoxy(9,19);
 		cprintf("USERNAME DOES NOT EXISTS! TRY AGAIN..");
@@ -386,7 +386,7 @@ void fp()
 		{   	if(file.eof()) break;
 			file.read( (char *)&i2,sizeof(i2) );
 			if(strcmp(i2.getun(),i1.getun())==0)
-			{	fbox(16,8,72,19,"Û",1,0,0);
+			{	fbox(16,8,72,19,"Ã›",1,0,0);
 				textcolor(15); textbackground(1);
 				gotoxy(9,18);
 				cprintf("ANSWER YOUR GIVEN HINT QUESTION: ");
@@ -399,7 +399,7 @@ void fp()
 					int p=-sizeof(i1);
 					file.seekg(p,ios::cur);
 					file.write( (char *)&i2,sizeof(i2) );
-					fbox(16,8,72,19,"Û",1,0,0);
+					fbox(16,8,72,19,"Ã›",1,0,0);
 					textcolor(15); textbackground(1);
 					gotoxy(9,18);
 					cprintf("PASSWORD RESET SUCCESSFULLY! ");
