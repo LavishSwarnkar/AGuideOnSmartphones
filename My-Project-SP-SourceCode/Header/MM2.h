@@ -5,8 +5,8 @@
 void help()
 {   	int i,j,n;
 	char s[80];
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("help",29,4,10,6);
 	ifstream fin("data\\text\\help.dat");
 	for(i=0;i<6;i++)
@@ -38,8 +38,8 @@ void help()
 void about()
 {   	int i,j,n;
 	char s[80];
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("about",26,4,10,6);
 	ifstream fin("data\\text\\about.dat");
 	for(i=0;i<6;i++)
@@ -69,18 +69,18 @@ void about()
 void info()
 {   	char k='0';
 	int ch=1,f=0;
-	hbox(2,2,79,24,"Û",14,1);
-	fbox(3,3,78,10,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	hbox(2,2,79,24,"Ã›",14,1);
+	fbox(3,3,78,10,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("information",9,4,10,6);
-	fbox(11,3,43,23,"Û",3,1);
-	fbox(11,44,78,23,"Û",2,1);
+	fbox(11,3,43,23,"Ã›",3,1);
+	fbox(11,44,78,23,"Ã›",2,1);
 	textcolor(1); textbackground(3);
-	gotoxy(4,12); cprintf("Û HISTORY OF SMART PHONES");
+	gotoxy(4,12); cprintf("Ã› HISTORY OF SMART PHONES");
 	textcolor(11); textbackground(1);
-	gotoxy(4,12); cprintf("Û");
+	gotoxy(4,12); cprintf("Ã›");
 	textcolor(1); textbackground(3);
-	gotoxy(4,14); cprintf("Û FEATURES OF SMART PHONES");
+	gotoxy(4,14); cprintf("Ã› FEATURES OF SMART PHONES");
 	gotoxy(4,22); cprintf("'B'-BACK");
 	textbackground(2);
 	gotoxy(45,12); cprintf(">> USE ARROW KEYS OR");
@@ -97,7 +97,7 @@ void info()
 			ch+=1;
 
 		else if(k=='c'||k=='C'||k==13)
-		{	fbox(3,3,78,23,"Û",6,7);
+		{	fbox(3,3,78,23,"Ã›",6,7);
 			textcolor(1); textbackground(3);
 			switch(ch)
 			{    	case 1: history();  f=1;break;
@@ -112,18 +112,18 @@ void info()
 		else if(k=='b'||k=='B')
 			return;
 		if(f)
-		{	hbox(2,2,79,24,"Û",14,1,0);
-			fbox(3,3,78,10,"Û",6,1,0);
-			hbox(2,2,79,10,"Û",14,1,0);
+		{	hbox(2,2,79,24,"Ã›",14,1,0);
+			fbox(3,3,78,10,"Ã›",6,1,0);
+			hbox(2,2,79,10,"Ã›",14,1,0);
 			lcon("information",9,4,10,6);
-			fbox(11,3,43,23,"Û",3,1,0);
-			fbox(11,44,78,23,"Û",2,1,0);
+			fbox(11,3,43,23,"Ã›",3,1,0);
+			fbox(11,44,78,23,"Ã›",2,1,0);
 			textcolor(1); textbackground(3);
-			gotoxy(4,12); cprintf("Û HISTORY OF SMART PHONES");
+			gotoxy(4,12); cprintf("Ã› HISTORY OF SMART PHONES");
 			textcolor(11); textbackground(1);
-			gotoxy(4,12); cprintf("Û");
+			gotoxy(4,12); cprintf("Ã›");
 			textcolor(1); textbackground(3);
-			gotoxy(4,14); cprintf("Û FEATURES OF SMARTPHONES");
+			gotoxy(4,14); cprintf("Ã› FEATURES OF SMARTPHONES");
 			gotoxy(4,22); cprintf("'B'-BACK");
 			textbackground(2);
 			gotoxy(45,12); cprintf(">> USE ARROW KEYS OR");
@@ -138,13 +138,13 @@ void info()
 				{	gotoxy(4,12+(2*i));
 					if(i==0)  textcolor(11);
 					else      textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 2: for(i=0;i<2;i++)
 				{  	gotoxy(4,12+(2*i));
 					if(i==1)  textcolor(11);
 					else      textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 		}
 	}
@@ -153,37 +153,37 @@ void info()
 void desc()
 {	int ch=1,g=0;
 	char k='0';
-	fbox(2,2,79,24,"Û",7,1);
-	hbox(2,2,79,24,"Û",15,0);
+	fbox(2,2,79,24,"Ã›",7,1);
+	hbox(2,2,79,24,"Ã›",15,0);
 	lcon("description",8,4,0,15);
-	fbox(11,3,78,23,"Û",0,1,0);
+	fbox(11,3,78,23,"Ã›",0,1,0);
 	ptext("data\\text\\dguide.dat",15,8,12,0,0);
 	getch();
-	fbox(2,2,79,24,"Û",7,1,0);
-	hbox(2,2,79,24,"Û",15,0,0);
+	fbox(2,2,79,24,"Ã›",7,1,0);
+	hbox(2,2,79,24,"Ã›",15,0,0);
 	lcon("brands",23,4,0,15);
-	fbox(11,3,78,20,"Û",0,1,0);
-	fbox(21,3,78,23,"Û",7,1,0);
+	fbox(11,3,78,20,"Ã›",0,1,0);
+	fbox(21,3,78,23,"Ã›",7,1,0);
 	textcolor(15); textbackground(0);
 	gotoxy(5,12);
-	cprintf("Û APPLE        Û MICROMAX ");
+	cprintf("Ã› APPLE        Ã› MICROMAX ");
 	textcolor(2); textbackground(0);
-	gotoxy(5,12); cprintf("Û");
+	gotoxy(5,12); cprintf("Ã›");
 	textcolor(15); textbackground(0);
 	gotoxy(5,13);
-	cprintf("Û ASUS         Û MICROSOFT ");
+	cprintf("Ã› ASUS         Ã› MICROSOFT ");
 	gotoxy(5,14);
-	cprintf("Û BLACKBERRY   Û ONE PLUS ");
+	cprintf("Ã› BLACKBERRY   Ã› ONE PLUS ");
 	gotoxy(5,15);
-	cprintf("Û GIONEE       Û OPPO ");
+	cprintf("Ã› GIONEE       Ã› OPPO ");
 	gotoxy(5,16);
-	cprintf("Û HTC          Û SAMSUNG ");
+	cprintf("Ã› HTC          Ã› SAMSUNG ");
 	gotoxy(5,17);
-	cprintf("Û Le ECO       Û SONY ");
+	cprintf("Ã› Le ECO       Ã› SONY ");
 	gotoxy(5,18);
-	cprintf("Û LENOVO       Û XIAOMI ");
+	cprintf("Ã› LENOVO       Ã› XIAOMI ");
 	gotoxy(5,19);
-	cprintf("Û LG           Û OTHER ");
+	cprintf("Ã› LG           Ã› OTHER ");
 	textcolor(0); textbackground(15);
 	gotoxy(20,22); cprintf("'B'-BACK || 'E'-EXIT || 'C'-CONFIRMATION");
 	while(1)
@@ -221,28 +221,28 @@ void desc()
 		else if(k=='b'||k=='B')
 			return;
 		if(g)
-		{	fbox(2,2,79,24,"Û",7,1,0);
-			hbox(2,2,79,24,"Û",15,0,0);
+		{	fbox(2,2,79,24,"Ã›",7,1,0);
+			hbox(2,2,79,24,"Ã›",15,0,0);
 			lcon("brands",23,4,0,15);
-			fbox(11,3,78,20,"Û",0,1,0);
-			fbox(21,3,78,23,"Û",7,1,0);
+			fbox(11,3,78,20,"Ã›",0,1,0);
+			fbox(21,3,78,23,"Ã›",7,1,0);
 			textcolor(15); textbackground(0);
 			gotoxy(5,12);
-			cprintf("Û APPLE        Û MICROMAX ");
+			cprintf("Ã› APPLE        Ã› MICROMAX ");
 			gotoxy(5,13);
-			cprintf("Û ASUS         Û MICROSOFT ");
+			cprintf("Ã› ASUS         Ã› MICROSOFT ");
 			gotoxy(5,14);
-			cprintf("Û BLACKBERRY   Û ONE PLUS ");
+			cprintf("Ã› BLACKBERRY   Ã› ONE PLUS ");
 			gotoxy(5,15);
-			cprintf("Û GIONEE       Û OPPO ");
+			cprintf("Ã› GIONEE       Ã› OPPO ");
 			gotoxy(5,16);
-			cprintf("Û HTC          Û SAMSUNG ");
+			cprintf("Ã› HTC          Ã› SAMSUNG ");
 			gotoxy(5,17);
-			cprintf("Û Le ECO       Û SONY ");
+			cprintf("Ã› Le ECO       Ã› SONY ");
 			gotoxy(5,18);
-			cprintf("Û LENOVO       Û XIAOMI ");
+			cprintf("Ã› LENOVO       Ã› XIAOMI ");
 			gotoxy(5,19);
-			cprintf("Û LG           Û OTHER ");
+			cprintf("Ã› LG           Ã› OTHER ");
 			textcolor(0); textbackground(15);
 			gotoxy(20,22); cprintf("'B'-BACK || 'E'-EXIT || 'C'-CONFIRMATION"); g=0;
 		}
@@ -252,127 +252,127 @@ void desc()
 				{	gotoxy(5,12+(i));
 					if(i==0) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 2: for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					if(i==1) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 3: for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					if(i==2) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 4: for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					if(i==3) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 5: for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					if(i==4) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 6: for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					if(i==5) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 7: for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					if(i==6) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 8: for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				}
 				for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					if(i==7) textcolor(2);
 					else     textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 9: for(i=0;i<=7;i++)
 				{	gotoxy(5,12+(i));
 					textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				}
 				for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==0) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 10:for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==1) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 11:for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==2) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 12:for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==3) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 13:for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==4) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 14:for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==5) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 15:for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==6) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 16:for(i=0;i<=7;i++)
 				{	gotoxy(20,12+(i));
 					if(i==7) textcolor(2);
 					else	 textcolor(15);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 		}
 	}
 }
 
 void add()
-{     	fbox(3,3,78,23,"Û",6,1);
-	fbox(3,3,78,10,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+{     	fbox(3,3,78,23,"Ã›",6,1);
+	fbox(3,3,78,10,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("modification",5,4,10,6);
 	int f=0;
-	fbox(11,3,43,23,"Û",3,1);
-	fbox(11,44,78,23,"Û",2,1);
+	fbox(11,3,43,23,"Ã›",3,1);
+	fbox(11,44,78,23,"Ã›",2,1);
 	textcolor(1); textbackground(3);
-	gotoxy(4,12); cprintf("Û ADD DATA");
+	gotoxy(4,12); cprintf("Ã› ADD DATA");
 	textcolor(11); textbackground(1);
-	gotoxy(4,12); cprintf("Û");
+	gotoxy(4,12); cprintf("Ã›");
 	textcolor(1); textbackground(3);
-	gotoxy(4,14); cprintf("Û MODIFY DATA");
-	gotoxy(4,16); cprintf("Û EXPORT DATA");
+	gotoxy(4,14); cprintf("Ã› MODIFY DATA");
+	gotoxy(4,16); cprintf("Ã› EXPORT DATA");
 	gotoxy(4,22); cprintf("'B'-BACK");
 	textbackground(2);
 	gotoxy(45,12); cprintf(">> USE ARROW KEYS OR");
@@ -391,7 +391,7 @@ void add()
 			ch+=1;
 
 		else if(k=='c'||k=='C'||k==13)
-		{	fbox(3,3,78,23,"Û",6,1);
+		{	fbox(3,3,78,23,"Ã›",6,1);
 			textcolor(1); textbackground(3);
 			switch(ch)
 			{      	case 1: addrec(); f=1; break;
@@ -408,19 +408,19 @@ void add()
 			return;
 
 		if(f)
-		{	hbox(2,2,79,24,"Û",14,1,0);
-			fbox(3,3,78,10,"Û",6,1,0);
-			hbox(2,2,79,10,"Û",14,1,0);
+		{	hbox(2,2,79,24,"Ã›",14,1,0);
+			fbox(3,3,78,10,"Ã›",6,1,0);
+			hbox(2,2,79,10,"Ã›",14,1,0);
 			lcon("modification",5,4,10,6);
-			fbox(11,3,43,23,"Û",3,1,0);
-			fbox(11,44,78,23,"Û",2,1,0);
+			fbox(11,3,43,23,"Ã›",3,1,0);
+			fbox(11,44,78,23,"Ã›",2,1,0);
 			textcolor(1); textbackground(3);
-			gotoxy(4,12); cprintf("Û ADD DATA");
+			gotoxy(4,12); cprintf("Ã› ADD DATA");
 			textcolor(11); textbackground(1);
-			gotoxy(4,12); cprintf("Û");
+			gotoxy(4,12); cprintf("Ã›");
 			textcolor(1); textbackground(3);
-			gotoxy(4,14); cprintf("Û MODIFY DATA");
-			gotoxy(4,16); cprintf("Û EXPORT DATA");
+			gotoxy(4,14); cprintf("Ã› MODIFY DATA");
+			gotoxy(4,16); cprintf("Ã› EXPORT DATA");
 			gotoxy(4,22); cprintf("'B'-BACK");
 			textbackground(2);
 			gotoxy(45,12); cprintf(">> USE ARROW KEYS OR");
@@ -435,47 +435,47 @@ void add()
 				{	gotoxy(4,12+(i));
 					if(i==0) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 2: for(i=0;i<=4;i+=2)
 				{	gotoxy(4,12+(i));
 					if(i==2) textcolor(11);
 					else     textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 			case 3: for(i=0;i<=4;i+=2)
 				{	gotoxy(4,12+(i));
 					if(i==4) textcolor(11);
 					else     textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				} break;
 		}
 	}
 }
 
 void filter()
-{    	fbox(3,3,78,23,"Û",6,1,0);
-	fbox(3,3,78,10,"Û",6,1,0);
-	hbox(2,2,79,10,"Û",14,1,0);
+{    	fbox(3,3,78,23,"Ã›",6,1,0);
+	fbox(3,3,78,10,"Ã›",6,1,0);
+	hbox(2,2,79,10,"Ã›",14,1,0);
 	lcon("filteration",8,4,10,6);
-	hbox(2,2,79,24,"Û",14,1,0);
+	hbox(2,2,79,24,"Ã›",14,1,0);
 	ptext("data\\text\\fguide.dat",14,7,12);
-	getch(); fbox(12,3,78,23,"Û",6,1,0);
+	getch(); fbox(12,3,78,23,"Ã›",6,1,0);
 	while(1)
-	{	fbox(3,3,78,23,"Û",6,1,0);
-		fbox(3,3,78,10,"Û",6,1,0);
-		hbox(2,2,79,10,"Û",14,1,0);
+	{	fbox(3,3,78,23,"Ã›",6,1,0);
+		fbox(3,3,78,10,"Ã›",6,1,0);
+		hbox(2,2,79,10,"Ã›",14,1,0);
 		lcon("filteration",8,4,10,6);
-		hbox(2,2,79,24,"Û",14,1,0);
-		fbox(12,3,78,23,"Û",6,1,0);
+		hbox(2,2,79,24,"Ã›",14,1,0);
+		fbox(12,3,78,23,"Ã›",6,1,0);
 		int fno=1,mno=0,a[150],*p;
 		char s[7];
-		fbox(11,3,43,23,"Û",3,1,0);
-		fbox(11,44,78,23,"Û",2,1,0);
+		fbox(11,3,43,23,"Ã›",3,1,0);
+		fbox(11,44,78,23,"Ã›",2,1,0);
 		textcolor(1); textbackground(3);
 		gotoxy(4,12); cprintf("1 FILTER BY COMPANY NAME");
 		textcolor(11); textbackground(1);
-		gotoxy(4,13); cprintf("Û");
+		gotoxy(4,13); cprintf("Ã›");
 		textcolor(1); textbackground(3);
 		gotoxy(4,13); cprintf("2 FILTER BY PROCESSOR");
 		gotoxy(4,14); cprintf("3 FILTER BY OPERATING SYSTEM");
@@ -516,7 +516,7 @@ void filter()
 				case '7':  p=fbynet(a); break;
 				case '8':  p=fbybat(a); break;
 				case '9':  p=fbyyear(a); break;
-				default :  fbox(22,3,78,23,"Û",7,0,0);
+				default :  fbox(22,3,78,23,"Ã›",7,0,0);
 					   textcolor(0); textbackground(15);
 					   gotoxy(4,22); cprintf("NO MOBILES FOUND. PRESS ANY KEY TO RETURN");
 					   getch(); return;
@@ -527,7 +527,7 @@ void filter()
 			a[j]=10;
 			mno=j;
 			if(fno>=1&&mno==0)
-			{    	fbox(22,3,78,23,"Û",7,0,0);
+			{    	fbox(22,3,78,23,"Ã›",7,0,0);
 				textcolor(0); textbackground(15);
 				gotoxy(4,22); cprintf("NO MOBILES FOUND. PRESS ANY KEY TO RETURN");
 				getch(); return;
@@ -546,9 +546,9 @@ void sta()
 	i=fin.tellg();
 	fin.close();
 	n=i/sizeof(m);
-	fbox(3,3,78,23,"Û",6,1,0);
-	fbox(3,3,78,10,"Û",6,1,0);
-	hbox(2,2,79,10,"Û",14,1,0);
+	fbox(3,3,78,23,"Ã›",6,1,0);
+	fbox(3,3,78,10,"Ã›",6,1,0);
+	hbox(2,2,79,10,"Ã›",14,1,0);
 	lcon("status",23,4,10,6);
 	if(n==0)
 	{	textcolor(0); textbackground(6);
@@ -564,9 +564,9 @@ void sta()
 }
 
 void ama()
-{     	fbox(3,3,78,23,"Û",6,1);
-	fbox(3,3,78,10,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+{     	fbox(3,3,78,23,"Ã›",6,1);
+	fbox(3,3,78,10,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("amaze",19,4,10,6);
 	lcon("me",51,4,10,6);
 	mi m;
@@ -575,7 +575,7 @@ void ama()
 	ptext("data\\text\\ama2.dat",14,4,12);
 	char k=getch();
 	if(k=='B'||k=='b') return;
-	fbox(12,3,78,23,"Û",6,1);
+	fbox(12,3,78,23,"Ã›",6,1);
 	ptext("data\\text\\ama3.dat",14,4,12);
 	getch();
 	return;
