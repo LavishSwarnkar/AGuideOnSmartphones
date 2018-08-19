@@ -7,7 +7,7 @@ void pimage(char st[],int c=15,int x=35,int y=12)
 	{     	fin.getline(s,80,'p');
 		for(j=0;s[j]!=NULL;j++)
 		{      	if(s[j]=='l')
-				s[j]='Û';
+				s[j]='Ã›';
 			if(s[j]=='k')
 				s[j]=char(223);
 			if(s[j]=='u')
@@ -24,7 +24,7 @@ void pimage(char st[],int c=15,int x=35,int y=12)
 }
 
 void ptext(char st[],int c=14,int x=7,int y=12,int tb=14,int t=6)
-{     	fbox(12,7,78,23,"Û",t,1,0);
+{     	fbox(12,7,78,23,"Ã›",t,1,0);
 	int i,n,j;
 char s[80];
 	ifstream fin(st);
@@ -44,7 +44,7 @@ char s[80];
 
 		for(j=0;s[j]!=NULL;j++)
 		{      	if(s2[j]=='l')
-				s2[j]='Û';
+				s2[j]='Ã›';
 			if(s2[j]=='k')
 				s2[j]=char(223);
 			if(s2[j]=='o')
@@ -62,8 +62,8 @@ char s[80];
 void pro()
 {    	
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("processor",15,4,10,6);
 	pimage("data\\images\\pro.im",15,33);
 	ptext("data\\text\\pro.dat",14,5);
@@ -73,8 +73,8 @@ void pro()
 void os()
 {    
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("os",35,4,10,6);
 	pimage("data\\images\\os.im",10,30);
 	ptext("data\\text\\os.dat",14,5);
@@ -84,8 +84,8 @@ void os()
 void bat()
 {    
 	 
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("battery",20,4,10,6);
 	pimage("data\\images\\bat.im");
 	ptext("data\\text\\bat.dat",14,9);
@@ -95,8 +95,8 @@ void bat()
 void cam()
 {    	
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("camera",23,4,10,6);
 	pimage("data\\images\\cam.im",15,32,13);
 	ptext("data\\text\\cam.dat",14,8);
@@ -106,8 +106,8 @@ void cam()
 void disp()
 {    	
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("display",20,4,10,6);
 	ptext("data\\text\\disp.dat");
 	getch();
@@ -116,8 +116,8 @@ void disp()
 void body()
 {    	
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("body",29,4,10,6);
 	ptext("data\\text\\body.dat",14,9);
 	getch();
@@ -126,8 +126,8 @@ void body()
 void net()
 {    
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("network",20,4,10,6);
 	pimage("data\\images\\net.im",15,25,14);
 	ptext("data\\text\\net.dat");
@@ -137,8 +137,8 @@ void net()
 void sens()
 {  
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("sensors",20,4,10,6);
 	ptext("data\\text\\sens.dat",14);
 	getch();
@@ -147,8 +147,8 @@ void sens()
 void mem()
 {  
 	
-	fbox(3,3,78,23,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	fbox(3,3,78,23,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("memory",23,4,10,6);
 	pimage("data\\images\\mem.im");
 	ptext("data\\text\\mem.dat",14,6);
@@ -164,7 +164,7 @@ void exite()
 	strcpy(s2,"you");
 	strcpy(s3,"know");
 	int i=strlen(s)+strlen(s2)+strlen(s3)+19;
-	hbox(2,2,79,24,"Û",15,0);
+	hbox(2,2,79,24,"Ã›",15,0);
 	i=(80-i)/2;
 	lcon(s,i/2,4,15,1);
 	lcon(s2,i/2+15,4,15,1);
