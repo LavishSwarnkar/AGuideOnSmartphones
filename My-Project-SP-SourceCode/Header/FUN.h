@@ -3,11 +3,11 @@ void halfb(int t, int l, int r, int b, int c, int d=5)
 	textcolor(c);
 	for(i=r/2,k=(r/2)+1;i>=l;i--,k++)
 	{      	for(j=t;j<b+1;j++)
-		{	gotoxy(i,j); cprintf("Û");
+		{	gotoxy(i,j); cprintf("Ã›");
 			if(k==80&&j==25)
-			{ gotoxy(k,j); cprintf("Û\b"); }
+			{ gotoxy(k,j); cprintf("Ã›\b"); }
 			else
-			{ gotoxy(k,j); cprintf("Û");   }
+			{ gotoxy(k,j); cprintf("Ã›");   }
 		}
 		delay(d);
 	}
@@ -18,7 +18,7 @@ downb(int c)
 	textcolor(c);
 	for(i=24;i>=1;i--)
 	{      	for(j=1;j<81;j++)
-		{  gotoxy(j,i); cprintf("Û"); }
+		{  gotoxy(j,i); cprintf("Ã›"); }
 		delay(2);
 	}
 	return 0;
@@ -28,7 +28,7 @@ upb(int c)
 	textcolor(c);
 	for(i=1;i<25;i++)
 	{       for(j=1;j<=80;j++)
-		{	gotoxy(j,i); cprintf("Û");
+		{	gotoxy(j,i); cprintf("Ã›");
 		}
 		delay(2);
 	}
@@ -86,7 +86,7 @@ void lcon(char s[],int x, int y,int c ,int bg)
 		{    	fin.getline(s2,6,'+');
 			for(k=0 ; s2[k]!=NULL ;k++)
 				if(s2[k]=='*')
-					s2[k]='Û';
+					s2[k]='Ã›';
 			gotoxy(x,y+j);
 			cprintf(s2);
 			delay(5);
@@ -102,7 +102,7 @@ void mosaic(int c)
 	for(int i=0 ; i<=10000 ; i++)
 	{    fin>>x;  fin>>y;
 		gotoxy(x,y);
-		cprintf("Û");
+		cprintf("Ã›");
 	}
 	fin.close();
 	
