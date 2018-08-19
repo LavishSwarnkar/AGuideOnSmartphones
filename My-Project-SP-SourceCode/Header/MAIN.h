@@ -26,7 +26,7 @@ void welcome()
 
 		for(j=0;s[j]!=NULL;j++)
 		{	if(s[j]=='l'||s[j]=='s')
-				s[j]='Û';
+				s[j]='Ã›';
 		}
 		textcolor(10); textbackground(1);
 		cprintf(s);
@@ -54,7 +54,7 @@ void welcome()
 	{      	fin.getline(s,80,'p');
 		for(j=0;s[j]!=NULL;j++)
 		{	if(s[j]=='l')
-				s[j]='Û';
+				s[j]='Ã›';
 			if(s[j]=='k')
 				s[j]=char(223);
 			if(s[j]=='o')
@@ -74,10 +74,10 @@ void overview()
 	int i,j,n;
 	char s[80],s2[81];
 
-	hbox(2,1,80,24,"Û",1,14);
+	hbox(2,1,80,24,"Ã›",1,14);
 	hbox(3,2,79,23,":",1,3);
 	lcon("overview",18,5,0,3);
-	hbox(11,18,65,11,"Û",1,14);
+	hbox(11,18,65,11,"Ã›",1,14);
 
 	ifstream fin("data\\text\\ov.dat");
 
@@ -111,10 +111,10 @@ void guideline()
 {  	int i,j,n;
 	char s[80];
 
-	hbox(2,1,80,24,"Û",10,14);
+	hbox(2,1,80,24,"Ã›",10,14);
 	hbox(3,2,79,23,":",10,2);
 	lcon("guideline",15,5,0,10);
-	hbox(11,15,67,11,"Û",0,14);
+	hbox(11,15,67,11,"Ã›",0,14);
 
 	ifstream fin("data\\text\\gl.dat");
 	for(i=0;i<6;i++)
@@ -160,11 +160,11 @@ login()
 
 	textcolor(1);
 
-	hbox(2,1,80,24,"Û",15,1);
+	hbox(2,1,80,24,"Ã›",15,1);
 	lcon("login",26,4,15,1);
-	hbox(10,26,55,10,"Û",7,7);
-	fbox(12,18,62,22,"Û",0,7);
-	hbox(12,18,62,22,"Û",15,2);
+	hbox(10,26,55,10,"Ã›",7,7);
+	fbox(12,18,62,22,"Ã›",0,7);
+	hbox(12,18,62,22,"Ã›",15,2);
 	textcolor(15); textbackground(0);
 	gotoxy(22,14); cprintf(s1);
 	textcolor(15); textbackground(1);
@@ -185,8 +185,8 @@ login()
 			ch+=1;
 
 		else if(k=='c'||k=='C'||k==13)
-		{	fbox(12,3,78,23,"Û",1,1);
-			hbox(10,26,55,10,"Û",7,1);
+		{	fbox(12,3,78,23,"Ã›",1,1);
+			hbox(10,26,55,10,"Ã›",7,1);
 			textcolor(0); textbackground(6);
 			switch(ch)
 			{      	case 1: newp();       break;
@@ -202,10 +202,10 @@ login()
 		else if(k=='m'||k=='M')
 			{ admin(); f=1; }
 		if(f)
-		{	hbox(10,26,55,10,"Û",7,1,0);
-			fbox(12,4,76,23,"Û",1,1,0);
-			fbox(12,18,62,22,"Û",0,7,0);
-			hbox(12,18,62,22,"Û",15,2,0);
+		{	hbox(10,26,55,10,"Ã›",7,1,0);
+			fbox(12,4,76,23,"Ã›",1,1,0);
+			fbox(12,18,62,22,"Ã›",0,7,0);
+			hbox(12,18,62,22,"Ã›",15,2,0);
 			textcolor(15); textbackground(0);
 			gotoxy(22,14); cprintf(s1);
 			textcolor(0); textbackground(7);
