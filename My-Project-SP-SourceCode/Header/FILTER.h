@@ -2,7 +2,7 @@ int* fbycnm(int a[])
 {      	mi m;
 	int b[15],i=0,ch,j=0;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22);cprintf("ENTER COMPANY'S NAME:                          "); gotoxy(26,22); gets(s);
 	if(a[0]==10)
@@ -35,7 +35,7 @@ int* fbypro(int a[])
 {      	mi m;
 	int b[150],i=0,ch;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); cprintf("ENTER PROCESSOR'S NAME:                          "); gotoxy(28,22); gets(s);
 	int j=0;
@@ -67,7 +67,7 @@ int* fbyos(int a[])
 	int b[150],i=0,ch;
 	float v; int j;
 	char nm[20][20],s[30],k='1';
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); 	cprintf("ENTER OPERATING SYSTEM'S NAME:                          "); gotoxy(36,22); gets(s);
 	gotoxy(4,22); 	cprintf("ENTER OPERATING SYSTEM'S VERSION:                          "); gotoxy(38,22); cin>>v;
@@ -121,17 +121,17 @@ int* fbycam(int a[])
 {      	mi m;
 	int b[150],i=0,ch,rl,ru,fl,fu;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); 	cprintf("ENTER REAR CAMERA'S LOWER LIMIT:                          ");  gotoxy(37,22); cin>>rl;
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22);
 	cprintf("ENTER REAR CAMERA'S UPPER LIMIT:                          "); gotoxy(37,22); cin>>ru;
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); 	 cprintf("ENTER FRONT CAMERA'S LOWER LIMIT:                          "); gotoxy(38,22); 	 cin>>fl;
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); cprintf("ENTER FRONT CAMERA'S UPPER LIMIT:                          "); gotoxy(38,22); cin>>fu;
 	int j=0;
@@ -162,16 +162,16 @@ int* fbymem(int a[])
 {      	mi m;
 	int b[150],i=0,ch,rl,ru,fl,fu,j=0;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); cprintf("ENTER ROM'S LOWER LIMIT:                          "); gotoxy(29,22); cin>>rl;
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); 	 cprintf("ENTER ROM'S UPPER LIMIT:                          ");  gotoxy(29,22); cin>>ru;
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); 	 cprintf("ENTER RAM'S LOWER LIMIT:                          "); gotoxy(29,22); cin>>fl;
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); 	 cprintf("ENTER RAM'S UPPER LIMIT:                          ");    gotoxy(29,22); cin>>fu;
 	if(a[0]==10)
@@ -202,13 +202,13 @@ int* fbypr(int a[])
 	int b[150],i=0,ch,j=0,mpr=0,k=0;
 	unsigned long rl,ru;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22);
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22); 	 cprintf("ENTER PRICE'S LOWER LIMIT:                          "); gotoxy(31,22); cin>>rl;
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22);
 	cprintf("ENTER PRICE'S UPPER LIMIT:                          "); gotoxy(31,22); cin>>ru;
@@ -249,7 +249,7 @@ int* fbynet(int a[])
 {      	mi m;
 	int b[150],i=0,ch,rl,ru,j=0;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22);
 	cprintf("ENTER NETWORK'S GENERATION:                          "); gotoxy(32,22); cin>>rl;
@@ -280,7 +280,7 @@ int* fbybat(int a[])
 {      	mi m;
 	int b[150],i=0,ch,rl,ru,j=0;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22);
 	cprintf("ENTER BATTERY'S LOWER CAPACITY:                          "); gotoxy(36,22); cin>>rl;
@@ -312,7 +312,7 @@ int* fbyyear(int a[])
 {      	mi m;
 	int b[150],i=0,ch,rl,ru,j=0;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	gotoxy(4,22);
 	cprintf("ENTER YEAR OF LAUNCH:                          "); gotoxy(26,22); cin>>rl;
@@ -345,7 +345,7 @@ int* fbysens(int a[])
 {      	mi m;
 	int b[150],i=0,ch,j=0;
 	char nm[20][20],s[30];
-	fbox(22,3,78,23,"Û",7,0,0);
+	fbox(22,3,78,23,"Ã›",7,0,0);
 	textcolor(0); textbackground(15);
 	if(a[0]==10)
 	{ 	ifstream fin("data\\text\\mobinfo.dat",ios::binary);
