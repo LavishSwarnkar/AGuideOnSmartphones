@@ -1,9 +1,9 @@
 #include"header\mm4.h"
 void history()
 {	
-	hbox(2,2,79,24,"Û",14,1);
-	fbox(3,3,78,10,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	hbox(2,2,79,24,"Ã›",14,1);
+	fbox(3,3,78,10,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("history",20,4,10,6);
 	ptext("data\\text\\m.dat",15);
 	int ch=1;
@@ -41,25 +41,25 @@ void features()
 {    	int ch=1,f=0,i;
 	char k='0';
 
-	hbox(2,2,79,24,"Û",14,1);
-	fbox(3,3,78,10,"Û",6,1);
-	hbox(2,2,79,10,"Û",14,1);
+	hbox(2,2,79,24,"Ã›",14,1);
+	fbox(3,3,78,10,"Ã›",6,1);
+	hbox(2,2,79,10,"Ã›",14,1);
 	lcon("features",17,4,10,6);
-	fbox(11,3,43,23,"Û",3,1);
-	fbox(11,44,78,23,"Û",2,1);
+	fbox(11,3,43,23,"Ã›",3,1);
+	fbox(11,44,78,23,"Ã›",2,1);
 	textcolor(1); textbackground(3);
-	gotoxy(4,12); cprintf("Û PROCESSOR");
+	gotoxy(4,12); cprintf("Ã› PROCESSOR");
 	textcolor(11); textbackground(1);
-	gotoxy(4,12); cprintf("Û");
+	gotoxy(4,12); cprintf("Ã›");
 	textcolor(1); textbackground(3);
-	gotoxy(4,13); cprintf("Û OPERATING SYSTEM");
-	gotoxy(4,14); cprintf("Û MEMORY");
-	gotoxy(4,15); cprintf("Û BATTERY");
-	gotoxy(4,16); cprintf("Û CAMERA");
-	gotoxy(4,17); cprintf("Û DISPLAY");
-	gotoxy(4,18); cprintf("Û BODY");
-	gotoxy(4,19); cprintf("Û NETWORK");
-	gotoxy(4,20); cprintf("Û SENSORS");
+	gotoxy(4,13); cprintf("Ã› OPERATING SYSTEM");
+	gotoxy(4,14); cprintf("Ã› MEMORY");
+	gotoxy(4,15); cprintf("Ã› BATTERY");
+	gotoxy(4,16); cprintf("Ã› CAMERA");
+	gotoxy(4,17); cprintf("Ã› DISPLAY");
+	gotoxy(4,18); cprintf("Ã› BODY");
+	gotoxy(4,19); cprintf("Ã› NETWORK");
+	gotoxy(4,20); cprintf("Ã› SENSORS");
 	gotoxy(4,22); cprintf("'B'-BACK");
 	textbackground(2);
 	gotoxy(45,12); cprintf(">> USE ARROW KEYS OR");
@@ -75,7 +75,7 @@ void features()
 			ch+=1;
 
 		else if(k=='c'||k=='C'||k==13)
-		{	fbox(3,3,78,23,"Û",6,1);
+		{	fbox(3,3,78,23,"Ã›",6,1);
 			textcolor(1); textbackground(3);
 			switch(ch)
 			{    	case 1: pro();  break;
@@ -97,25 +97,25 @@ void features()
 			return;
 
 		if(f)
-		{	hbox(2,2,79,24,"Û",14,1,0);
-			fbox(3,3,78,10,"Û",6,1,0);
-			hbox(2,2,79,10,"Û",14,1,0);
+		{	hbox(2,2,79,24,"Ã›",14,1,0);
+			fbox(3,3,78,10,"Ã›",6,1,0);
+			hbox(2,2,79,10,"Ã›",14,1,0);
 			lcon("features",17,4,10,6);
-			fbox(11,3,43,23,"Û",3,1,0);
-			fbox(11,44,78,23,"Û",2,1,0);
+			fbox(11,3,43,23,"Ã›",3,1,0);
+			fbox(11,44,78,23,"Ã›",2,1,0);
 			textcolor(1); textbackground(3);
-			gotoxy(4,12); cprintf("Û PROCESSOR");
+			gotoxy(4,12); cprintf("Ã› PROCESSOR");
 			textcolor(11); textbackground(1);
-			gotoxy(4,12); cprintf("Û");
+			gotoxy(4,12); cprintf("Ã›");
 			textcolor(1); textbackground(3);
-			gotoxy(4,13); cprintf("Û OPERATING SYSTEM");
-			gotoxy(4,14); cprintf("Û MEMORY");
-			gotoxy(4,15); cprintf("Û BATTERY");
-			gotoxy(4,16); cprintf("Û CAMERA");
-			gotoxy(4,17); cprintf("Û DISPLAY");
-			gotoxy(4,18); cprintf("Û BODY");
-			gotoxy(4,19); cprintf("Û NETWORK");
-			gotoxy(4,20); cprintf("Û SENSORS");
+			gotoxy(4,13); cprintf("Ã› OPERATING SYSTEM");
+			gotoxy(4,14); cprintf("Ã› MEMORY");
+			gotoxy(4,15); cprintf("Ã› BATTERY");
+			gotoxy(4,16); cprintf("Ã› CAMERA");
+			gotoxy(4,17); cprintf("Ã› DISPLAY");
+			gotoxy(4,18); cprintf("Ã› BODY");
+			gotoxy(4,19); cprintf("Ã› NETWORK");
+			gotoxy(4,20); cprintf("Ã› SENSORS");
 			gotoxy(4,22); cprintf("'B'-BACK");
 			textbackground(2);
 			gotoxy(45,12); cprintf(">> USE ARROW KEYS OR");
@@ -130,55 +130,55 @@ void features()
 				{	gotoxy(4,12+(i));
 					if(i==0) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 2: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==1) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 3: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==2) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 4: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==3) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 5: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==4) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 6: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==5) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 7: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==6) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 8: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==7) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 			case 9: for(i=0;i<=8;i++)
 				{	gotoxy(4,12+(i));
 					if(i==8) textcolor(11);
 					else	 textcolor(1);
-					cprintf("Û");
+					cprintf("Ã›");
 				}  break;
 		}
 	}
