@@ -13,7 +13,7 @@ This is my C++ Project I submitted to CBSE in XIIth standard.\
 * Add more smart phones description.
 * Interesting facts on smart phones.
 
-**VIDEO**
+**VIDEO**\
 [![Video](https://img.youtube.com/vi/M24kpvbXRj8/0.jpg)](http://www.youtube.com/watch?v=M24kpvbXRj8 "A Guide on Smartphones - C++ Project - XIIth CBSE")
 
  1. HELP
