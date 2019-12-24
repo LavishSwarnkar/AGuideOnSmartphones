@@ -13,12 +13,16 @@ This is my C++ Project I submitted to CBSE in XIIth standard.\
 * Add more smart phones description.
 * Interesting facts on smart phones.
 
-## VIDEO
-[![Video](https://img.youtube.com/vi/M24kpvbXRj8/0.jpg)](http://www.youtube.com/watch?v=M24kpvbXRj8 "A Guide on Smartphones - C++ Project - XIIth CBSE")
+## SCREENSHOTS
+![Screenshots](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Screenshots/screenshots.gif)
+> You can see more (actually, a lot of) screenshots [here](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Screenshots/README.md)
 
 ## MAJOR ATTRACTIONS
 * This project purely uses Text mode of Turbo C++. **GRAPHICS MODE IS NOT USED ANYWHERE!**
 * The animations are used everywhere : to draw boxes, borders, large text, etc.
 * Images are just text shown by Block character
+
+## VIDEO
+[![Video](https://img.youtube.com/vi/M24kpvbXRj8/0.jpg)](http://www.youtube.com/watch?v=M24kpvbXRj8 "A Guide on Smartphones - C++ Project - XIIth CBSE")
 
 ## MORE INFO COMING SOON...
