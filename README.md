@@ -1,11 +1,13 @@
 # A Guide on Smart-phones
 
 ## INTRODUCTION
-This is my C++ Project made in Turbo C++ and submitted to CBSE in XIIth standard.\
+This is my C++ Project made in Turbo C++ **in a week** and submitted to **CBSE in XIIth standard**.\
 \
-"A Guide on Smart-phones" is a MS- DOS Console Application where you can browse smart-phones, their specifications, features, price, etc. Also, you can filter them as per your needs. Export to XLS is also available.\
+Who says one can't create **GUI using Turbo C++**? I took inspiration from Turbo C++ IDE itself and some other DOS applications built in Turbo C++. And what I built next is illustrated below.\
 \
-Who says one can't create GUI using Turbo C++? I took inspiration from Turbo C++ IDE itself and some other DOS applications built in Turbo C++. And what I built next is illustrated below.
+**"A Guide on Smart-phones"** is a **MS- DOS Console Application** where you can browse smart-phones, their specifications, features, price, etc. Also, you can filter them as per your needs. Export to XLS is also available.\
+\
+Everything for this project is built from scratch and **not copied from elsewhere**.
 
 ## FEATURES
 * Brief history of smart phones.
@@ -82,5 +84,15 @@ void lcon(char s[],int x, int y,int c ,int bg)
 
 ## VIDEO
 [![Video](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/VideoThumbnail.png)](http://www.youtube.com/watch?v=M24kpvbXRj8 "A Guide on Smartphones - C++ Project - XIIth CBSE")
+
+## HOW TO USE
+* Download [this zip](https://github.com/lswarnkar1/AGuideOnSmartphones/raw/master/Executable%20%26%20Supporting%20Files.zip)
+* This zip contains required files for execution
+* Extract downloaded zip in some folder named "x" in C drive.
+* **The exe will not run as is.** You will need DOS-Box first for running this exe on Windows
+* Download & Install DOS-Box from [here](https://softfamous.com/dosbox/download/)
+* Run DOs-Box. Execute command "mount C C:\[write-that-x-folder-name-here]" and then "C:"
+* Then just enter this last command "MAIN" and voila! There you have it.
+* You can use Username & Password in application as "a" for simplicity
 
 ## MORE INFO COMING SOON...
