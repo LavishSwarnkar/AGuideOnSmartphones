@@ -3,7 +3,9 @@
 ## INTRODUCTION
 This is my C++ Project made in Turbo C++ and submitted to CBSE in XIIth standard.\
 \
-"A Guide on Smart-phones" is a MS- DOS Console Application where you can browse smart-phones, their specifications, features, price, etc. Also, you can filter them as per your needs. Export to XLS is also available.
+"A Guide on Smart-phones" is a MS- DOS Console Application where you can browse smart-phones, their specifications, features, price, etc. Also, you can filter them as per your needs. Export to XLS is also available.\
+\
+Who says one can't create GUI using Turbo C++? I took inspiration from Turbo C++ IDE itself and some other DOS applications built in Turbo C++. And what I built next is illustrated below.
 
 ## FEATURES
 * Brief history of smart phones.
@@ -12,11 +14,6 @@ This is my C++ Project made in Turbo C++ and submitted to CBSE in XIIth standard
 * Filter Smart phones as required.
 * Add more smart phones description.
 * Interesting facts on smart phones.
-
-Solarized dark             |  Solarized Ocean
-:-------------------------:|:-------------------------:
-![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Screenshots/screenshots.gif)  |  ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Screenshots/screenshots.gif)
-![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Screenshots/screenshots.gif)  |  ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Screenshots/screenshots.gif)
 
 ## SCREENSHOTS
 ![Screenshots](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Screenshots/screenshots.gif)
@@ -66,6 +63,22 @@ void lcon(char s[],int x, int y,int c ,int bg)
 ### 2. The images
 * You might be thinking the images shown are bitmaps but they are not. They are just text (char matrix) printed using Block character.
 ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/BTS2.png)
+
+### 3. The animations
+* Multiple functions were created to draw boxes, fill boxes, draw borders and for other animations. Some of the creations are illustrated below:
+
+.		           |  .
+:-------------------------:|:-------------------------:
+![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/1.gif)  |  ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/2.gif)
+![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/3.gif)  |  ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/4.gif)
+![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/5.gif)  |  ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/6.gif)
+![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/7.gif)  |  ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/8.gif)
+![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/9.gif)
+
+### 4. The interactive menu
+* An interactive menu controlled by arrow keys was created. Asking like "Enter your choice:" is no longer required. Look how cursor changes its position on pressing arrow keys. To select an option user just have to press Enter!
+
+![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/10.gif)
 
 ## VIDEO
 [![Video](https://img.youtube.com/vi/M24kpvbXRj8/0.jpg)](http://www.youtube.com/watch?v=M24kpvbXRj8 "A Guide on Smartphones - C++ Project - XIIth CBSE")
