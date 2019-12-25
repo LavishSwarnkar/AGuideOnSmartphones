@@ -81,6 +81,6 @@ void lcon(char s[],int x, int y,int c ,int bg)
 ![](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/GIFs/10.gif)
 
 ## VIDEO
-[![Video](https://img.youtube.com/vi/M24kpvbXRj8/0.jpg)](http://www.youtube.com/watch?v=M24kpvbXRj8 "A Guide on Smartphones - C++ Project - XIIth CBSE")
+[![Video](https://github.com/lswarnkar1/AGuideOnSmartphones/blob/master/Other%20Images/VideoThumbnail.png)](http://www.youtube.com/watch?v=M24kpvbXRj8 "A Guide on Smartphones - C++ Project - XIIth CBSE")
 
 ## MORE INFO COMING SOON...
