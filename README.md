@@ -91,7 +91,7 @@ void lcon(char s[],int x, int y,int c ,int bg)
 * Extract downloaded zip in some folder named "x" in C drive.
 * **The exe will not run as is.** You will need DOS-Box first for running this exe on Windows
 * Download & Install DOS-Box from [here](https://softfamous.com/dosbox/download/)
-* Run DOs-Box. Execute command "mount C C:\[write-that-x-folder-name-here]" and then "C:"
+* Run DOS-Box. Execute command "mount C C:\\[write-that-x-folder-name-here]" and then "C:"
 * Then just enter this last command "MAIN" and voila! There you have it.
 * You can use Username & Password in application as "a" for simplicity
 
