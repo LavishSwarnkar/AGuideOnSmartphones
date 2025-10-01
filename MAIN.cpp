@@ -1,7 +1,9 @@
-#include"header\lavish.h"
-void main()
-{    welcome();
-     overview();
-     guideline();
-     login();
+#include "include/menu.h"
+
+int main() {
+    displayWelcomeScreen();
+    displayOverview();
+    displayGuidelines();
+    displayLoginScreen();
+    return 0;
 }
