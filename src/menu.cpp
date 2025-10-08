@@ -4,19 +4,28 @@
 #include "phone_data.h"
 #include "filter.h"
 #include "export.h"
+
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 #include <conio.h>
 #include <dos.h>
-#include <process.h>
-#include <cstdio>
-#include <fstream>
-#include <cstring>
+#include <cstdlib>
 
-using namespace std;
+namespace menu {
+
+using namespace ui;
+
+// Forward declarations for functions in this file
+void drawMainMenuUI();
+void drawInformationMenuUI();
+void drawFeaturesMenuUI();
+void drawDataManagementMenuUI();
+void drawFilterMenuUI(const std::vector<int>& applied_filters);
 
 void displayWelcomeScreen() {
     clrscr();
-    char s[80];
     delay(1500);
     textmode(C80);
 
@@ -24,19 +33,24 @@ void displayWelcomeScreen() {
     drawHalfBorder(1, 3, 80, 24, 10, 30);
     drawHalfBorder(1, 5, 80, 24, 9, 30);
 
-    ifstream fin("data\\text\\ls.dat");
-    for (int i = 0; i <= 23; i++) {
-        gotoxy(34, 1);
+    std::ifstream fin("data/text/ls.dat");
+    if (!fin) return;
+
+    std::string line;
+    for (int i = 0; i <= 23; ++i) {
         if (i > 0 && i < 11)    gotoxy(34, i);
         if (i >= 11 && i < 17)  gotoxy(22, i);
         if (i >= 17 && i <= 23) gotoxy(16, i);
-        fin.getline(s, 60, 'p');
-        for (int j = 0; s[j] != NULL; j++) {
-            if (s[j] == 'l' || s[j] == 's')
-                s[j] = 'Û';
+
+        std::getline(fin, line, 'p');
+        if (fin.fail()) break;
+
+        for (char& c : line) {
+            if (c == 'l' || c == 's') c = 'Û';
         }
-        textcolor(10); textbackground(1);
-        cprintf(s);
+        textcolor(10);
+        textbackground(1);
+        cprintf("%s", line.c_str());
         delay(30);
     }
     fin.close();
@@ -55,200 +69,181 @@ void displayWelcomeScreen() {
     delay(700);
     drawSlidingCurtain(4, true);
 
-    fin.open("data\\text\\bp.dat");
-    for (int i = 0; i < 20; i++) {
-        fin.getline(s, 80, 'p');
-        for (int j = 0; s[j] != NULL; j++) {
-            if (s[j] == 'l') s[j] = 'Û';
-            if (s[j] == 'k') s[j] = char(223);
-            if (s[j] == 'o') s[j] = char(220);
-        }
-        textcolor(14);
-        gotoxy(28, 3);
-        if (i > 1)    gotoxy(28, 2 + i);
-        cprintf(s);
-        delay(30);
-    }
+    drawImage("data/images/bp.dat", 14, 28, 3);
     delay(700);
     drawSlidingCurtain(3, false);
 }
 
 void displayOverview() {
-    char s[80], s2[81];
     drawBorderedBox(2, 1, 80, 24, "Û", 1, 14);
     drawBorderedBox(3, 2, 79, 23, ":", 1, 3);
     displayTextArt("overview", 18, 5, 0, 3);
     drawBorderedBox(11, 18, 65, 11, "Û", 1, 14);
 
-    ifstream fin("data\\text\\ov.dat");
-    for (int i = 0; i < 6; i++) {
+    std::ifstream fin("data/text/ov.dat");
+    if (!fin) return;
+
+    for (int i = 0; i < 6; ++i) {
         int n;
         fin >> n;
-        fin.getline(s, 80, '*');
-        for (int j = 0; j < n; j++)
-            s2[j] = ' ';
-        int k = j;
-        for (j = 0; s[j] != NULL; j++)
-            s2[k + j] = s[j];
-        s2[k + j] = NULL;
+        if (fin.fail()) break;
+
+        std::string line;
+        std::getline(fin, line, '*');
+        if (fin.fail()) break;
+
+        std::string padded_line(n, ' ');
+        padded_line += line;
+
         textcolor(0);
         textbackground(3);
         gotoxy(4, 14 + i);
-        cprintf(s2);
+        cprintf("%s", padded_line.c_str());
         delay(40);
     }
-    delay(700);
     fin.close();
+    delay(700);
     drawSlidingCurtain(2, true);
 }
 
 void displayGuidelines() {
-    char s[80];
     drawBorderedBox(2, 1, 80, 24, "Û", 10, 14);
     drawBorderedBox(3, 2, 79, 23, ":", 10, 2);
     displayTextArt("guideline", 15, 5, 0, 10);
     drawBorderedBox(11, 15, 67, 11, "Û", 0, 14);
 
-    ifstream fin("data\\text\\gl.dat");
-    for (int i = 0; i < 6; i++) {
+    std::ifstream fin("data/text/gl.dat");
+    if (!fin) return;
+
+    for (int i = 0; i < 6; ++i) {
         int n;
-        char s2[81];
         fin >> n;
-        fin.getline(s, 80, '*');
-        for (int j = 0; j < n; j++)
-            s2[j] = ' ';
-        int k = j;
-        for (j = 0; s[j] != NULL; j++)
-            s2[k + j] = s[j];
-        s2[k + j] = NULL;
+        if (fin.fail()) break;
+
+        std::string line;
+        std::getline(fin, line, '*');
+        if (fin.fail()) break;
+
+        std::string padded_line(n, ' ');
+        padded_line += line;
+
         textcolor(0); textbackground(2);
         gotoxy(11, 14 + i);
-        cprintf(s2);
+        cprintf("%s", padded_line.c_str());
         delay(30);
     }
     fin.close();
     delay(700);
 }
 
+void drawLoginUI(int selected_option) {
+    const std::vector<std::string> options = {
+        ">> NEW USER? CREATE A NEW ACCOUNT NOW!",
+        ">> EXISTING USER? LOGIN NOW!",
+        ">> CHANGE PASSWORD",
+        ">> FORGOT PASSWORD? RENEW IT!"
+    };
+
+    drawBorderedBox(2, 1, 80, 24, "Û", 15, 1, 0);
+    displayTextArt("login", 26, 4, 15, 1);
+    drawBorderedBox(10, 26, 55, 10, "Û", 7, 7, 0);
+    drawFilledBox(12, 18, 62, 22, "Û", 0, 7, 0);
+    drawBorderedBox(12, 18, 62, 22, "Û", 15, 2, 0);
+
+    for (size_t i = 0; i < options.size(); ++i) {
+        gotoxy(22, 14 + i * 2);
+        if (i + 1 == selected_option) {
+            textcolor(15); textbackground(0);
+        } else {
+            textcolor(15); textbackground(1);
+        }
+        cprintf("%s", options[i].c_str());
+    }
+
+    textcolor(15); textbackground(1);
+    gotoxy(3, 23); cprintf("(ARROW KEYS / W,A,S,D)-SELECTION  || 'C'-CONFIRMATION  || 'M'-ADMINISTRATOR");
+    gotoxy(70, 4); cprintf("'E'-EXIT");
+}
+
 void displayLoginScreen() {
     clrscr();
-    char k = '0';
-    char s1[50] = ">> NEW USER? CREATE A NEW ACCOUNT NOW!";
-    char s2[30] = ">> EXISTING USER? LOGIN NOW!";
-    char s3[30] = ">> CHANGE PASSWORD";
-    char s4[30] = ">> FORGOT PASSWORD? RENEW IT!";
-    char s5[80] = "(ARROW KEYS / W,A,S,D)-SELECTION  || 'C'-CONFIRMATION  || 'M'-ADMINISTRATOR";
-
-    int ch = 1, f = 0;
-    for (int i = 0; i <= 14; i++) {
+    for (int i = 0; i <= 14; ++i) {
         textbackground(i);
         clrscr();
         delay(40);
     }
     textbackground(1);
     clrscr();
-    textcolor(1);
 
-    drawBorderedBox(2, 1, 80, 24, "Û", 15, 1);
-    displayTextArt("login", 26, 4, 15, 1);
-    drawBorderedBox(10, 26, 55, 10, "Û", 7, 7);
-    drawFilledBox(12, 18, 62, 22, "Û", 0, 7);
-    drawBorderedBox(12, 18, 62, 22, "Û", 15, 2);
-    textcolor(15); textbackground(0);
-    gotoxy(22, 14); cprintf(s1);
-    textcolor(15); textbackground(1);
-    gotoxy(22, 16); cprintf(s2);
-    gotoxy(22, 18); cprintf(s3);
-    gotoxy(22, 20); cprintf(s4);
+    int choice = 1;
+    drawLoginUI(choice);
 
-    textcolor(15); textbackground(1);
-    gotoxy(3, 23); cprintf(s5);
-    gotoxy(70, 4); cprintf("'E'-EXIT");
-
-    while (1) {
-        k = getch();
-        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && ch != 1)
-            ch -= 1;
-        else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && ch != 4)
-            ch += 1;
-        else if (k == 'c' || k == 'C' || k == 13) {
+    while (true) {
+        char k = getch();
+        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && choice > 1) {
+            choice--;
+        } else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && choice < 4) {
+            choice++;
+        } else if (k == 'c' || k == 'C' || k == 13) {
             drawFilledBox(12, 3, 78, 23, "Û", 1, 1);
             drawBorderedBox(10, 26, 55, 10, "Û", 7, 1);
             textcolor(0); textbackground(6);
-            switch (ch) {
-            case 1: registerNewUser(); break;
-            case 2: loginUser(); break;
-            case 3: changePassword(); break;
-            case 4: forgotPassword(); break;
+            switch (choice) {
+                case 1: auth::registerNewUser(); break;
+                case 2: auth::loginUser(); break;
+                case 3: auth::changePassword(); break;
+                case 4: auth::forgotPassword(); break;
             }
-            f = 1;
-        }
-        else if (k == 'e' || k == 'E')
+            drawLoginUI(choice);
+        } else if (k == 'e' || k == 'E') {
             exitApplication();
-        else if (k == 'm' || k == 'M')
-        {
-            adminMenu(); f = 1;
+        } else if (k == 'm' || k == 'M') {
+            auth::adminMenu();
+            drawLoginUI(choice);
         }
-        if (f) {
-            drawBorderedBox(10, 26, 55, 10, "Û", 7, 1, 0);
-            drawFilledBox(12, 4, 76, 23, "Û", 1, 1, 0);
-            drawFilledBox(12, 18, 62, 22, "Û", 0, 7, 0);
-            drawBorderedBox(12, 18, 62, 22, "Û", 15, 2, 0);
-            textcolor(15); textbackground(0);
-            gotoxy(22, 14); cprintf(s1);
-            textcolor(0); textbackground(7);
-            gotoxy(22, 16); cprintf(s2);
-            gotoxy(22, 18); cprintf(s3);
-            gotoxy(22, 20); cprintf(s4);
-            textcolor(15); textbackground(1);
-            gotoxy(3, 23); cprintf(s5);
-            gotoxy(70, 4); cprintf("'E'-EXIT");
-            gotoxy(70, 5); cprintf("        ");
-            f = 0;
-        }
-
-        switch (ch) {
-        case 1:
-            textcolor(15); textbackground(0);
-            gotoxy(22, 14); cprintf(s1);
-            textcolor(15); textbackground(1);
-            gotoxy(22, 16); cprintf(s2);
-            gotoxy(22, 18); cprintf(s3);
-            gotoxy(22, 20); cprintf(s4);
-            break;
-        case 2:
-            textcolor(15); textbackground(1);
-            gotoxy(22, 14); cprintf(s1);
-            textcolor(15); textbackground(0);
-            gotoxy(22, 16); cprintf(s2);
-            textcolor(15); textbackground(1);
-            gotoxy(22, 18); cprintf(s3);
-            gotoxy(22, 20); cprintf(s4);
-            break;
-        case 3:
-            textcolor(15); textbackground(1);
-            gotoxy(22, 14); cprintf(s1);
-            gotoxy(22, 16); cprintf(s2);
-            textcolor(15); textbackground(0);
-            gotoxy(22, 18); cprintf(s3);
-            textcolor(15); textbackground(1);
-            gotoxy(22, 20); cprintf(s4);
-            break;
-        case 4:
-            textcolor(15); textbackground(1);
-            gotoxy(22, 14); cprintf(s1);
-            gotoxy(22, 16); cprintf(s2);
-            gotoxy(22, 18); cprintf(s3);
-            textcolor(15); textbackground(0);
-            gotoxy(22, 20); cprintf(s4);
-            break;
-        }
+        drawLoginUI(choice);
     }
 }
 
+void drawMainMenuUI(int selected_option) {
+    const std::vector<std::string> options = {
+        "SMART PHONES BRIEF INFORMATION",
+        "SOME POPULAR SMART PHONES DESCRIPTION",
+        "SMART PHONES FILTERING",
+        "ADD / MODIFY / EXPORT DATA",
+        "STATUS",
+        "AMAZE ME"
+    };
+
+    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
+    drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
+    displayTextArt("main", 15, 4, 10, 6);
+    displayTextArt("menu", 44, 4, 10, 6);
+    drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
+    drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
+
+    for (size_t i = 0; i < options.size(); ++i) {
+        gotoxy(4, 12 + i * 2);
+        if (i + 1 == selected_option) {
+            textcolor(11);
+            textbackground(1);
+        } else {
+            textcolor(1);
+            textbackground(3);
+        }
+        cprintf("Û %s", options[i].c_str());
+    }
+
+    textbackground(2);
+    gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
+    gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
+    gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
+    gotoxy(45, 17); cprintf(">> 'E'- EXIT");
+    gotoxy(45, 19); cprintf(">> 'L'-HELP | 'B'-ABOUT");
+}
+
 void displayMainMenu() {
-    int i, j, ch = 1;
-    char s[20], k = '0';
     drawMosaic(1);
     drawBorderedBox(2, 2, 79, 24, "Û", 10, 1);
     displayTextArt("welcome", 4, 4, 14, 1);
@@ -263,344 +258,282 @@ void displayMainMenu() {
     displayTextArt("smart", 26, 7, 1, 10);
     displayTextArt("phones", 23, 14, 1, 10);
 
-    drawImage("data\\images\\sp.im", 11, 6, 8);
-    drawImage("data\\images\\pro.im", 11, 60, 4);
-    drawImage("data\\images\\bat.im", 11, 60, 14);
+    drawImage("data/images/sp.im", 11, 6, 8);
+    drawImage("data/images/pro.im", 11, 60, 4);
+    drawImage("data/images/bat.im", 11, 60, 14);
 
-    int f = 0;
     delay(300);
     drawMosaic(1);
-    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1);
-    drawFilledBox(3, 3, 78, 10, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
-    displayTextArt("main", 15, 4, 10, 6);
-    displayTextArt("menu", 44, 4, 10, 6);
-    drawFilledBox(11, 3, 43, 23, "Û", 3, 1);
-    drawFilledBox(11, 44, 78, 23, "Û", 2, 1);
-    textcolor(1); textbackground(3);
-    gotoxy(4, 12); cprintf("Û SMART PHONES BRIEF INFORMATION");
-    textcolor(11); textbackground(1);
-    gotoxy(4, 12); cprintf("Û");
-    textcolor(1); textbackground(3);
-    gotoxy(4, 14); cprintf("Û SOME POPULAR SMART PHONES DESCRIPTION");
-    gotoxy(4, 16); cprintf("Û SMART PHONES FILTERING ");
-    gotoxy(4, 18); cprintf("Û ADD / MODIFY / EXPORT DATA ");
-    gotoxy(4, 20); cprintf("Û STATUS");
-    gotoxy(4, 22); cprintf("Û AMAZE ME");
-    textbackground(2);
-    gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
-    gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
-    gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
-    gotoxy(45, 17); cprintf(">> 'E'- EXIT");
-    gotoxy(45, 19); cprintf(">> 'L'-HELP | 'B'-ABOUT");
 
-    while (1) {
-        k = getch();
-        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && ch != 1)
-            ch -= 1;
-        else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && ch != 6)
-            ch += 1;
-        else if (k == 'c' || k == 'C' || k == 13) {
-            textcolor(1); textbackground(3);
-            switch (ch) {
-            case 1: displayInformationMenu();    break;
-            case 2: displayDescriptionMenu();    break;
-            case 3: displayFilterMenu();  break;
-            case 4:    displayDataManagementMenu();     break;
-            case 5: displayStatus();     break;
-            case 6: displayAmazeMe();   break;
+    int choice = 1;
+    drawMainMenuUI(choice);
+
+    while (true) {
+        char k = getch();
+        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && choice > 1) {
+            choice--;
+        } else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && choice < 6) {
+            choice++;
+        } else if (k == 'c' || k == 'C' || k == 13) {
+            switch (choice) {
+                case 1: displayInformationMenu(); break;
+                case 2: displayDescriptionMenu(); break;
+                case 3: displayFilterMenu(); break;
+                case 4: displayDataManagementMenu(); break;
+                case 5: displayStatus(); break;
+                case 6: displayAmazeMe(); break;
             }
-            f = 1;
-        }
-        else if (k == 'e' || k == 'E')
+            drawMainMenuUI(choice);
+        } else if (k == 'e' || k == 'E') {
             exitApplication();
-        else if (k == 'l' || k == 'L') {
-            displayHelp(); f = 1;
+        } else if (k == 'l' || k == 'L') {
+            displayHelp();
+            drawMainMenuUI(choice);
+        } else if (k == 'b' || k == 'B') {
+            displayAbout();
+            drawMainMenuUI(choice);
         }
-        else if (k == 'b' || k == 'B') {
-            displayAbout(); f = 1;
-        }
-
-        if (f) {
-            drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
-            drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
-            drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
-            displayTextArt("main", 15, 4, 10, 6);
-            displayTextArt("menu", 44, 4, 10, 6);
-            drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
-            drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
-            textcolor(1); textbackground(3);
-            gotoxy(4, 12); cprintf("Û SMART PHONES BRIEF INFORMATION");
-            textcolor(11); textbackground(1);
-            gotoxy(4, 12); cprintf("Û");
-            textcolor(1); textbackground(3);
-            gotoxy(4, 14); cprintf("Û SOME POPULAR SMART PHONES DESCRIPTION");
-            gotoxy(4, 16); cprintf("Û SMART PHONES FILTERING ");
-            gotoxy(4, 18); cprintf("Û ADD / MODIFY /EXPORT DATA ");
-            gotoxy(4, 20); cprintf("Û STATUS");
-            gotoxy(4, 22); cprintf("Û AMAZE ME");
-            textbackground(2);
-            gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
-            gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
-            gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
-            gotoxy(45, 17); cprintf(">> 'E'- EXIT");
-            gotoxy(45, 19); cprintf(">> 'L'-HELP | 'B'-ABOUT");
-            f = 0;
-        }
-
-        for (i = 0; i <= 5; i++) {
-            gotoxy(4, 12 + (2 * i));
-            if (i == ch - 1) textcolor(11);
-            else     textcolor(1);
-            cprintf("Û");
-        }
+        drawMainMenuUI(choice);
     }
 }
 
-void displayInformationMenu() {
-    char k = '0';
-    int ch = 1, f = 0;
-    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1);
-    drawFilledBox(3, 3, 78, 10, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+void drawInformationMenuUI(int selected_option) {
+    const std::vector<std::string> options = {
+        "HISTORY OF SMART PHONES",
+        "FEATURES OF SMART PHONES"
+    };
+
+    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
+    drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
     displayTextArt("information", 9, 4, 10, 6);
-    drawFilledBox(11, 3, 43, 23, "Û", 3, 1);
-    drawFilledBox(11, 44, 78, 23, "Û", 2, 1);
-    textcolor(1); textbackground(3);
-    gotoxy(4, 12); cprintf("Û HISTORY OF SMART PHONES");
-    textcolor(11); textbackground(1);
-    gotoxy(4, 12); cprintf("Û");
-    textcolor(1); textbackground(3);
-    gotoxy(4, 14); cprintf("Û FEATURES OF SMART PHONES");
+    drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
+    drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
+
+    for (size_t i = 0; i < options.size(); ++i) {
+        gotoxy(4, 12 + i * 2);
+        if (i + 1 == selected_option) {
+            textcolor(11);
+            textbackground(1);
+        } else {
+            textcolor(1);
+            textbackground(3);
+        }
+        cprintf("Û %s", options[i].c_str());
+    }
+
+    textcolor(1);
+    textbackground(3);
     gotoxy(4, 22); cprintf("'B'-BACK");
+
     textbackground(2);
     gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
     gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
     gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
     gotoxy(45, 17); cprintf(">> 'E'- EXIT");
+}
 
-    while (1) {
-        k = getch();
-        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && ch != 1)
-            ch -= 1;
-        else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && ch != 2)
-            ch += 1;
-        else if (k == 'c' || k == 'C' || k == 13) {
+void displayInformationMenu() {
+    int choice = 1;
+    drawInformationMenuUI(choice);
+
+    while (true) {
+        char k = getch();
+        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && choice > 1) {
+            choice--;
+        } else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && choice < 2) {
+            choice++;
+        } else if (k == 'c' || k == 'C' || k == 13) {
             drawFilledBox(3, 3, 78, 23, "Û", 6, 7);
-            textcolor(1); textbackground(3);
-            switch (ch) {
-            case 1: displayHistory();  f = 1; break;
-            case 2: displayFeaturesMenu(); f = 1; break;
+            switch (choice) {
+                case 1: displayHistory(); break;
+                case 2: displayFeaturesMenu(); break;
             }
-        }
-        else if (k == 'e' || k == 'E')
+            drawInformationMenuUI(choice);
+        } else if (k == 'e' || k == 'E') {
             exitApplication();
-        else if (k == 'b' || k == 'B')
+        } else if (k == 'b' || k == 'B') {
             return;
-
-        if (f) {
-            drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
-            drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
-            drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
-            displayTextArt("information", 9, 4, 10, 6);
-            drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
-            drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
-            textcolor(1); textbackground(3);
-            gotoxy(4, 12); cprintf("Û HISTORY OF SMART PHONES");
-            textcolor(11); textbackground(1);
-            gotoxy(4, 12); cprintf("Û");
-            textcolor(1); textbackground(3);
-            gotoxy(4, 14); cprintf("Û FEATURES OF SMARTPHONES");
-            gotoxy(4, 22); cprintf("'B'-BACK");
-            textbackground(2);
-            gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
-            gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
-            gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
-            gotoxy(45, 17); cprintf(">> 'E'- EXIT");
-            f = 0;
         }
-
-        for (int i = 0; i < 2; i++) {
-            gotoxy(4, 12 + (2 * i));
-            if (i == ch - 1)  textcolor(11);
-            else      textcolor(1);
-            cprintf("Û");
-        }
+        drawInformationMenuUI(choice);
     }
 }
 
 void displayDescriptionMenu() {
-    int ch = 1, g = 0;
-    char k = '0';
     drawFilledBox(2, 2, 79, 24, "Û", 7, 1);
     drawBorderedBox(2, 2, 79, 24, "Û", 15, 0);
     displayTextArt("description", 8, 4, 0, 15);
     drawFilledBox(11, 3, 78, 23, "Û", 0, 1, 0);
-    drawText("data\\text\\dguide.dat", 15, 8, 12, 0, 0);
+    drawText("data/text/dguide.dat", 15, 8, 12, 0, 0);
     getch();
     drawFilledBox(2, 2, 79, 24, "Û", 7, 1, 0);
     drawBorderedBox(2, 2, 79, 24, "Û", 15, 0, 0);
     displayTextArt("brands", 23, 4, 0, 15);
     drawFilledBox(11, 3, 78, 20, "Û", 0, 1, 0);
     drawFilledBox(21, 3, 78, 23, "Û", 7, 1, 0);
-    textcolor(15); textbackground(0);
-    gotoxy(5, 12); cprintf("Û APPLE        Û MICROMAX ");
-    textcolor(2); textbackground(0);
-    gotoxy(5, 12); cprintf("Û");
-    textcolor(15); textbackground(0);
-    gotoxy(5, 13); cprintf("Û ASUS         Û MICROSOFT ");
-    gotoxy(5, 14); cprintf("Û BLACKBERRY   Û ONE PLUS ");
-    gotoxy(5, 15); cprintf("Û GIONEE       Û OPPO ");
-    gotoxy(5, 16); cprintf("Û HTC          Û SAMSUNG ");
-    gotoxy(5, 17); cprintf("Û Le ECO       Û SONY ");
-    gotoxy(5, 18); cprintf("Û LENOVO       Û XIAOMI ");
-    gotoxy(5, 19); cprintf("Û LG           Û OTHER ");
-    textcolor(0); textbackground(15);
-    gotoxy(20, 22); cprintf("'B'-BACK || 'E'-EXIT || 'C'-CONFIRMATION");
 
-    while (1) {
-        k = getch();
-        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && ch != 1)
-            ch -= 1;
-        else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && ch != 16)
-            ch += 1;
-        else if (k == 'c' || k == 'C' || k == 13) {
-            textcolor(1); textbackground(3);
-            switch (ch) {
-            case 1:  displaySmartphonesByBrand("APPLE");   break;
-            case 2:  displaySmartphonesByBrand("ASUS");    break;
-            case 3:  displaySmartphonesByBrand("BLACKBERRY");   break;
-            case 4:  displaySmartphonesByBrand("GIONEE");   break;
-            case 5:  displaySmartphonesByBrand("HTC");   break;
-            case 6:  displaySmartphonesByBrand("Le ECO");   break;
-            case 7:  displaySmartphonesByBrand("LENOVO");   break;
-            case 8:  displaySmartphonesByBrand("LG");   break;
-            case 9:  displaySmartphonesByBrand("MICROMAX");   break;
-            case 10: displaySmartphonesByBrand("MICROSOFT");   break;
-            case 11: displaySmartphonesByBrand("ONEPLUS");   break;
-            case 12: displaySmartphonesByBrand("OPPO");   break;
-            case 13: displaySmartphonesByBrand("SAMSUNG");   break;
-            case 14: displaySmartphonesByBrand("SONY");   break;
-            case 15: displaySmartphonesByBrand("XIAOMI");   break;
-            case 16: displaySmartphonesByBrand("OTHER");   break;
-            }
-            g = 1;
+    const std::vector<std::string> brands = {
+        "APPLE", "MICROMAX",
+        "ASUS", "MICROSOFT",
+        "BLACKBERRY", "ONE PLUS",
+        "GIONEE", "OPPO",
+        "HTC", "SAMSUNG",
+        "Le ECO", "SONY",
+        "LENOVO", "XIAOMI",
+        "LG", "OTHER"
+    };
+
+    auto drawUI = [&](int selected) {
+        for (size_t i = 0; i < brands.size() / 2; ++i) {
+            gotoxy(5, 12 + i);
+            if (i + 1 == selected) textcolor(2); else textcolor(15);
+            cprintf("Û %-12s", brands[i * 2].c_str());
+
+            gotoxy(20, 12 + i);
+            if (i + 9 == selected) textcolor(2); else textcolor(15);
+            cprintf("Û %s", brands[i * 2 + 1].c_str());
         }
-        else if (k == 'e' || k == 'E')
-            exitApplication();
-        else if (k == 'b' || k == 'B')
-            return;
+        textcolor(0); textbackground(15);
+        gotoxy(20, 22); cprintf("'B'-BACK || 'E'-EXIT || 'C'-CONFIRMATION");
+    };
 
-        if (g) {
+    int choice = 1;
+    drawUI(choice);
+
+    while (true) {
+        char k = getch();
+        if ((k == '2' || k == 'w' || k == 'W' || k == 72) && choice > 1 && choice < 9) { // Up
+            choice--;
+        } else if ((k == '2' || k == 'w' || k == 'W' || k == 72) && choice > 8) {
+             choice-=8;
+        } else if ((k == '5' || k == 's' || k == 'S' || k == 80) && choice < 8) { // Down
+            choice++;
+        } else if ((k == '5' || k == 's' || k == 'S' || k == 80) && choice > 7 && choice < 16) {
+             choice+=8;
+        } else if ((k == '4' || k == 'a' || k == 'A' || k == 75) && choice > 8) { // Left
+            choice -= 8;
+        } else if ((k == '6' || k == 'd' || k == 'D' || k == 77) && choice < 9) { // Right
+            choice += 8;
+        } else if (k == 'c' || k == 'C' || k == 13) {
+            phone_data::displaySmartphonesByBrand(brands[choice - 1].c_str());
             drawFilledBox(2, 2, 79, 24, "Û", 7, 1, 0);
             drawBorderedBox(2, 2, 79, 24, "Û", 15, 0, 0);
             displayTextArt("brands", 23, 4, 0, 15);
             drawFilledBox(11, 3, 78, 20, "Û", 0, 1, 0);
             drawFilledBox(21, 3, 78, 23, "Û", 7, 1, 0);
-            textcolor(15); textbackground(0);
-            gotoxy(5, 12); cprintf("Û APPLE        Û MICROMAX ");
-            gotoxy(5, 13); cprintf("Û ASUS         Û MICROSOFT ");
-            gotoxy(5, 14); cprintf("Û BLACKBERRY   Û ONE PLUS ");
-            gotoxy(5, 15); cprintf("Û GIONEE       Û OPPO ");
-            gotoxy(5, 16); cprintf("Û HTC          Û SAMSUNG ");
-            gotoxy(5, 17); cprintf("Û Le ECO       Û SONY ");
-            gotoxy(5, 18); cprintf("Û LENOVO       Û XIAOMI ");
-            gotoxy(5, 19); cprintf("Û LG           Û OTHER ");
-            textcolor(0); textbackground(15);
-            gotoxy(20, 22); cprintf("'B'-BACK || 'E'-EXIT || 'C'-CONFIRMATION"); g = 0;
+            drawUI(choice);
+        } else if (k == 'e' || k == 'E') {
+            exitApplication();
+        } else if (k == 'b' || k == 'B') {
+            return;
         }
-
-        for (int i = 0; i <= 7; i++) {
-            gotoxy(5, 12 + i);
-            if (i == ch - 1) textcolor(2);
-            else textcolor(15);
-            cprintf("Û");
-        }
-        if (ch > 8) {
-            for (int i = 0; i <= 7; i++) {
-                gotoxy(20, 12 + i);
-                if (i == ch - 9) textcolor(2);
-                else textcolor(15);
-                cprintf("Û");
-            }
-        }
+        drawUI(choice);
     }
 }
 
-void displayDataManagementMenu() {
-    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-    drawFilledBox(3, 3, 78, 10, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+void drawDataManagementMenuUI(int selected_option) {
+    const std::vector<std::string> options = {
+        "ADD DATA",
+        "MODIFY DATA",
+        "EXPORT DATA"
+    };
+
+    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
+    drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
     displayTextArt("modification", 5, 4, 10, 6);
-    int f = 0;
-    drawFilledBox(11, 3, 43, 23, "Û", 3, 1);
-    drawFilledBox(11, 44, 78, 23, "Û", 2, 1);
-    textcolor(1); textbackground(3);
-    gotoxy(4, 12); cprintf("Û ADD DATA");
-    textcolor(11); textbackground(1);
-    gotoxy(4, 12); cprintf("Û");
-    textcolor(1); textbackground(3);
-    gotoxy(4, 14); cprintf("Û MODIFY DATA");
-    gotoxy(4, 16); cprintf("Û EXPORT DATA");
+    drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
+    drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
+
+    for (size_t i = 0; i < options.size(); ++i) {
+        gotoxy(4, 12 + i * 2);
+        if (i + 1 == selected_option) {
+            textcolor(11);
+            textbackground(1);
+        } else {
+            textcolor(1);
+            textbackground(3);
+        }
+        cprintf("Û %s", options[i].c_str());
+    }
+
+    textcolor(1);
+    textbackground(3);
     gotoxy(4, 22); cprintf("'B'-BACK");
+
     textbackground(2);
     gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
     gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
     gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
     gotoxy(45, 17); cprintf(">> 'E'- EXIT");
-    char k = '0';
-    int ch = 1;
-    while (1) {
-        k = getch();
-        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && ch != 1)
-            ch -= 1;
-        else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && ch != 3)
-            ch += 1;
-        else if (k == 'c' || k == 'C' || k == 13) {
+}
+
+void displayDataManagementMenu() {
+    int choice = 1;
+    drawDataManagementMenuUI(choice);
+
+    while (true) {
+        char k = getch();
+        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && choice > 1) {
+            choice--;
+        } else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && choice < 3) {
+            choice++;
+        } else if (k == 'c' || k == 'C' || k == 13) {
             drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-            textcolor(1); textbackground(3);
-            switch (ch) {
-            case 1: addSmartphoneRecord(); f = 1; break;
-            case 2: modifySmartphoneRecord(); f = 1; break;
-            case 3: exportData(); f = 1; break;
+            switch (choice) {
+                case 1: phone_data::addSmartphoneRecord(); break;
+                case 2: phone_data::modifySmartphoneRecord(); break;
+                case 3: export_file::exportData(); break;
             }
-        }
-        else if (k == 'e' || k == 'E')
+            drawDataManagementMenuUI(choice);
+        } else if (k == 'e' || k == 'E') {
             exitApplication();
-        else if (k == 'b' || k == 'B')
+        } else if (k == 'b' || k == 'B') {
             return;
-
-        if (f) {
-            drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
-            drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
-            drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
-            displayTextArt("modification", 5, 4, 10, 6);
-            drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
-            drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
-            textcolor(1); textbackground(3);
-            gotoxy(4, 12); cprintf("Û ADD DATA");
-            textcolor(11); textbackground(1);
-            gotoxy(4, 12); cprintf("Û");
-            textcolor(1); textbackground(3);
-            gotoxy(4, 14); cprintf("Û MODIFY DATA");
-            gotoxy(4, 16); cprintf("Û EXPORT DATA");
-            gotoxy(4, 22); cprintf("'B'-BACK");
-            textbackground(2);
-            gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
-            gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
-            gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
-            gotoxy(45, 17); cprintf(">> 'E'- EXIT");
-            f = 0;
         }
-
-        for (int i = 0; i <= 2; i++) {
-            gotoxy(4, 12 + (i * 2));
-            if (i == ch - 1) textcolor(11);
-            else    textcolor(1);
-            cprintf("Û");
-        }
+        drawDataManagementMenuUI(choice);
     }
 }
+
+
+void drawFilterMenuUI() {
+    drawFilledBox(3, 3, 78, 23, "Û", 6, 1, 0);
+    drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
+    displayTextArt("filteration", 8, 4, 10, 6);
+    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
+    drawFilledBox(12, 3, 78, 23, "Û", 6, 1, 0);
+    drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
+    drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
+
+    const std::vector<std::string> filters = {
+        "FILTER BY COMPANY NAME",
+        "FILTER BY PROCESSOR",
+        "FILTER BY OPERATING SYSTEM",
+        "FILTER BY CAMERA",
+        "FILTER BY MEMORY",
+        "FILTER BY PRICE",
+        "FILTER BY NETWORK",
+        "FILTER BY BATTERY",
+        "FILTER BY YEAR"
+    };
+
+    textcolor(1); textbackground(3);
+    for(size_t i=0; i < filters.size(); ++i) {
+        gotoxy(4, 12 + i);
+        cprintf("%zu %s", i+1, filters[i].c_str());
+    }
+    gotoxy(4, 21); cprintf("> ENTER FILTERATION SEQUENCE:           ");
+
+    textbackground(2);
+    gotoxy(45, 12); cprintf(">> WRITE FILTERATION SEQUENCE ");
+    gotoxy(45, 13); cprintf("   FOR FILTERING IN THAT ");
+    gotoxy(45, 14); cprintf("   ORDER");
+    gotoxy(45, 15); cprintf(">> 'E'- EXIT");
+    gotoxy(45, 17); cprintf(">> 'B'- BACK");
+    gotoxy(45, 18); cprintf(">> 0 - FINGERPRINT SCANNER");
+}
+
 
 void displayFilterMenu() {
     drawFilledBox(3, 3, 78, 23, "Û", 6, 1, 0);
@@ -608,105 +541,89 @@ void displayFilterMenu() {
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
     displayTextArt("filteration", 8, 4, 10, 6);
     drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
-    drawText("data\\text\\fguide.dat", 14, 7, 12);
-    getch(); drawFilledBox(12, 3, 78, 23, "Û", 6, 1, 0);
-    while (1) {
-        drawFilledBox(3, 3, 78, 23, "Û", 6, 1, 0);
-        drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
-        drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
-        displayTextArt("filteration", 8, 4, 10, 6);
-        drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
-        drawFilledBox(12, 3, 78, 23, "Û", 6, 1, 0);
-        int fno = 1, mno = 0, a[150], * p;
-        char s[7];
-        drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
-        drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
-        textcolor(1); textbackground(3);
-        gotoxy(4, 12); cprintf("1 FILTER BY COMPANY NAME");
-        textcolor(11); textbackground(1);
-        gotoxy(4, 13); cprintf("Û");
-        textcolor(1); textbackground(3);
-        gotoxy(4, 13); cprintf("2 FILTER BY PROCESSOR");
-        gotoxy(4, 14); cprintf("3 FILTER BY OPERATING SYSTEM");
-        gotoxy(4, 15); cprintf("4 FILTER BY CAMERA");
-        gotoxy(4, 16); cprintf("5 FILTER BY MEMORY");
-        gotoxy(4, 17); cprintf("6 FILTER BY PRICE");
-        gotoxy(4, 18); cprintf("7 FILTER BY NETWORK");
-        gotoxy(4, 19); cprintf("8 FILTER BY BATTERY");
-        gotoxy(4, 20); cprintf("9 FILTER BY YEAR");
-        gotoxy(4, 21); cprintf("> ENTER FILTERATION SEQUENCE:           ");
-        textbackground(2);
-        gotoxy(45, 12); cprintf(">> WRITE FILTERATION SEQUENCE ");
-        gotoxy(45, 13); cprintf("   FOR FILTERING IN THAT ");
-        gotoxy(45, 14); cprintf("   ORDER");
-        gotoxy(45, 15); cprintf(">> 'E'- EXIT");
-        gotoxy(45, 17); cprintf(">> 'B'- BACK");
-        gotoxy(45, 18); cprintf(">> 0 - FINGERPRINT SCANNER");
-        gotoxy(34, 21);  gets(s);
+    drawText("data/text/fguide.dat", 14, 7, 12);
+    getch();
 
-        if (s[0] == 'e' || s[0] == 'E')
+    while (true) {
+        drawFilterMenuUI();
+
+        std::string s;
+        char buffer[8];
+        gotoxy(34, 21);
+        cgets(buffer);
+        s = buffer;
+
+        if (s[0] == 'e' || s[0] == 'E') {
             exitApplication();
-        else if (s[0] == 'b' || s[0] == 'B')
+        } else if (s[0] == 'b' || s[0] == 'B') {
             return;
+        }
 
-        a[0] = 10;
-        for (int i = 0; s[i] != NULL; i++, fno++) {
-            switch (s[i]) {
-            case '0':  p = filterBySensor(a); break;
-            case '1':  p = filterByCompanyName(a); break;
-            case '2':  p = filterByProcessor(a); break;
-            case '3':  p = filterByOS(a); break;
-            case '4':  p = filterByCamera(a); break;
-            case '5':  p = filterByMemory(a); break;
-            case '6':  p = filterByPrice(a); break;
-            case '7':  p = filterByNetwork(a); break;
-            case '8':  p = filterByBattery(a); break;
-            case '9':  p = filterByYear(a); break;
-            default:  drawFilledBox(22, 3, 78, 23, "Û", 7, 0, 0);
-                textcolor(0); textbackground(15);
-                gotoxy(4, 22); cprintf("NO MOBILES FOUND. PRESS ANY KEY TO RETURN");
-                getch(); return;
+        std::vector<int> a;
+        a.push_back(10);
+
+        bool no_mobiles_found = false;
+        for (char c : s) {
+            std::vector<int> p;
+            switch (c) {
+                case '0':  p = filter::filterBySensor(a); break;
+                case '1':  p = filter::filterByCompanyName(a); break;
+                case '2':  p = filter::filterByProcessor(a); break;
+                case '3':  p = filter::filterByOS(a); break;
+                case '4':  p = filter::filterByCamera(a); break;
+                case '5':  p = filter::filterByMemory(a); break;
+                case '6':  p = filter::filterByPrice(a); break;
+                case '7':  p = filter::filterByNetwork(a); break;
+                case '8':  p = filter::filterByBattery(a); break;
+                case '9':  p = filter::filterByYear(a); break;
+                default:
+                    drawFilledBox(22, 3, 78, 23, "Û", 7, 0, 0);
+                    textcolor(0); textbackground(15);
+                    gotoxy(4, 22); cprintf("INVALID FILTER. PRESS ANY KEY TO RETURN");
+                    getch();
+                    no_mobiles_found = true;
+                    break;
             }
+            if(no_mobiles_found) break;
 
-            int j;
-            for (j = 0; *(p + j) != 10; j++)
-                a[j] = *(p + j);
-            a[j] = 10;
-            mno = j;
-            if (fno >= 1 && mno == 0) {
+            a = p;
+            if (a.empty() || (a.size() == 1 && a[0] == 10)) {
                 drawFilledBox(22, 3, 78, 23, "Û", 7, 0, 0);
                 textcolor(0); textbackground(15);
                 gotoxy(4, 22); cprintf("NO MOBILES FOUND. PRESS ANY KEY TO RETURN");
-                getch(); return;
+                getch();
+                no_mobiles_found = true;
+                break;
             }
         }
-        displayFilteredSmartphones(a);
+
+        if (!no_mobiles_found) {
+            phone_data::displayFilteredSmartphones(a);
+        }
     }
 }
 
 void displayStatus() {
-    Smartphone m;
-    int i, n = 5;
-    ifstream fin("data\\text\\mobinfo.dat", ios::binary);
-    fin.seekg(0, ios::end);
-    i = fin.tellg();
-    fin.close();
-    n = i / sizeof(m);
     drawFilledBox(3, 3, 78, 23, "Û", 6, 1, 0);
     drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
     displayTextArt("status", 23, 4, 10, 6);
+
+    std::ifstream fin("data/text/mobinfo.dat", std::ios::binary);
+    fin.seekg(0, std::ios::end);
+    long long file_size = fin.tellg();
+    fin.close();
+
+    int n = file_size / sizeof(phone_data::Smartphone);
+
     if (n == 0) {
         textcolor(0); textbackground(6);
-        gotoxy(7, 15); cprintf("THIS PROGRAM IS HAS NO SMART PHONES DESCRIPTION");
-    }
-    else {
+        gotoxy(7, 15); cprintf("THIS PROGRAM HAS NO SMART PHONES DESCRIPTION");
+    } else {
         textcolor(0); textbackground(6);
-        gotoxy(7, 15); cprintf("THIS PROGRAM IS MAINTAINED BY A TOTAL OF      "); gotoxy(48, 15); cout << n;
-        cprintf(" SMART PHONE'S DECRIPTION");
-        getch();
-        return;
+        gotoxy(7, 15); cprintf("THIS PROGRAM IS MAINTAINED BY A TOTAL OF %d SMART PHONE'S DESCRIPTION", n);
     }
+    getch();
 }
 
 void displayAmazeMe() {
@@ -715,13 +632,13 @@ void displayAmazeMe() {
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
     displayTextArt("amaze", 19, 4, 10, 6);
     displayTextArt("me", 51, 4, 10, 6);
-    drawText("data\\text\\ama.dat", 14, 9, 16);
+    drawText("data/text/ama.dat", 14, 9, 16);
     getch();
-    drawText("data\\text\\ama2.dat", 14, 4, 12);
+    drawText("data/text/ama2.dat", 14, 4, 12);
     char k = getch();
     if (k == 'B' || k == 'b') return;
     drawFilledBox(12, 3, 78, 23, "Û", 6, 1);
-    drawText("data\\text\\ama3.dat", 14, 4, 12);
+    drawText("data/text/ama3.dat", 14, 4, 12);
     getch();
 }
 
@@ -729,7 +646,7 @@ void displayHelp() {
     drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
     displayTextArt("help", 29, 4, 10, 6);
-    drawText("data\\text\\help.dat");
+    drawText("data/text/help.dat");
     getch();
 }
 
@@ -737,7 +654,7 @@ void displayAbout() {
     drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
     displayTextArt("about", 26, 4, 10, 6);
-    drawText("data\\text\\about.dat");
+    drawText("data/text/about.dat");
     getch();
 }
 
@@ -746,7 +663,7 @@ void displayHistory() {
     drawFilledBox(3, 3, 78, 10, "Û", 6, 1);
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
     displayTextArt("history", 20, 4, 10, 6);
-    drawText("data\\text\\m.dat", 15);
+    drawText("data/text/m.dat", 15);
     int ch = 1;
     char k = '0';
     while (1) {
@@ -761,119 +678,100 @@ void displayHistory() {
             return;
 
         switch (ch) {
-        case 1: drawText("data\\text\\m1.dat"); break;
-        case 2: drawText("data\\text\\m2.dat"); break;
-        case 3: drawText("data\\text\\m3.dat"); break;
-        case 4: drawText("data\\text\\m4.dat"); break;
-        case 5: drawText("data\\text\\m5.dat"); break;
-        case 6: drawText("data\\text\\m6.dat"); break;
-        case 7: drawText("data\\text\\m7.dat"); break;
-        case 8: drawText("data\\text\\m8.dat"); break;
-        case 9: drawText("data\\text\\m9.dat"); break;
+        case 1: drawText("data/text/m1.dat"); break;
+        case 2: drawText("data/text/m2.dat"); break;
+        case 3: drawText("data/text/m3.dat"); break;
+        case 4: drawText("data/text/m4.dat"); break;
+        case 5: drawText("data/text/m5.dat"); break;
+        case 6: drawText("data/text/m6.dat"); break;
+        case 7: drawText("data/text/m7.dat"); break;
+        case 8: drawText("data/text/m8.dat"); break;
+        case 9: drawText("data/text/m9.dat"); break;
         }
     }
 }
 
-void displayFeaturesMenu() {
-    int ch = 1, f = 0, i;
-    char k = '0';
+void drawFeaturesMenuUI(int selected_option) {
+    const std::vector<std::string> options = {
+        "PROCESSOR",
+        "OPERATING SYSTEM",
+        "MEMORY",
+        "BATTERY",
+        "CAMERA",
+        "DISPLAY",
+        "BODY",
+        "NETWORK",
+        "SENSORS"
+    };
 
-    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1);
-    drawFilledBox(3, 3, 78, 10, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+    drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
+    drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
     displayTextArt("features", 17, 4, 10, 6);
-    drawFilledBox(11, 3, 43, 23, "Û", 3, 1);
-    drawFilledBox(11, 44, 78, 23, "Û", 2, 1);
-    textcolor(1); textbackground(3);
-    gotoxy(4, 12); cprintf("Û PROCESSOR");
-    textcolor(11); textbackground(1);
-    gotoxy(4, 12); cprintf("Û");
-    textcolor(1); textbackground(3);
-    gotoxy(4, 13); cprintf("Û OPERATING SYSTEM");
-    gotoxy(4, 14); cprintf("Û MEMORY");
-    gotoxy(4, 15); cprintf("Û BATTERY");
-    gotoxy(4, 16); cprintf("Û CAMERA");
-    gotoxy(4, 17); cprintf("Û DISPLAY");
-    gotoxy(4, 18); cprintf("Û BODY");
-    gotoxy(4, 19); cprintf("Û NETWORK");
-    gotoxy(4, 20); cprintf("Û SENSORS");
+    drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
+    drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
+
+    for (size_t i = 0; i < options.size(); ++i) {
+        gotoxy(4, 12 + i);
+        if (i + 1 == selected_option) {
+            textcolor(11);
+            textbackground(1);
+        } else {
+            textcolor(1);
+            textbackground(3);
+        }
+        cprintf("Û %s", options[i].c_str());
+    }
+
+    textcolor(1);
+    textbackground(3);
     gotoxy(4, 22); cprintf("'B'-BACK");
+
     textbackground(2);
     gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
     gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
     gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
     gotoxy(45, 17); cprintf(">> 'E'- EXIT");
-    while (1) {
-        k = getch();
-        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && ch != 1)
-            ch -= 1;
-        else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && ch != 9)
-            ch += 1;
-        else if (k == 'c' || k == 'C' || k == 13) {
-            drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-            textcolor(1); textbackground(3);
-            switch (ch) {
-            case 1: displayProcessorInfo();  break;
-            case 2: displayOSInfo();   break;
-            case 3: displayMemoryInfo();  break;
-            case 4: displayBatteryInfo();  break;
-            case 5: displayCameraInfo();  break;
-            case 6: displayDisplayInfo();  break;
-            case 7: displayBodyInfo();  break;
-            case 8: displayNetworkInfo();   break;
-            case 9: displaySensorsInfo();  break;
-            }
-            f = 1;
-        }
-        else if (k == 'e' || k == 'E')
-            exitApplication();
-        else if (k == 'b' || k == 'B')
-            return;
-
-        if (f) {
-            drawBorderedBox(2, 2, 79, 24, "Û", 14, 1, 0);
-            drawFilledBox(3, 3, 78, 10, "Û", 6, 1, 0);
-            drawBorderedBox(2, 2, 79, 10, "Û", 14, 1, 0);
-            displayTextArt("features", 17, 4, 10, 6);
-            drawFilledBox(11, 3, 43, 23, "Û", 3, 1, 0);
-            drawFilledBox(11, 44, 78, 23, "Û", 2, 1, 0);
-            textcolor(1); textbackground(3);
-            gotoxy(4, 12); cprintf("Û PROCESSOR");
-            textcolor(11); textbackground(1);
-            gotoxy(4, 12); cprintf("Û");
-            textcolor(1); textbackground(3);
-            gotoxy(4, 13); cprintf("Û OPERATING SYSTEM");
-            gotoxy(4, 14); cprintf("Û MEMORY");
-            gotoxy(4, 15); cprintf("Û BATTERY");
-            gotoxy(4, 16); cprintf("Û CAMERA");
-            gotoxy(4, 17); cprintf("Û DISPLAY");
-            gotoxy(4, 18); cprintf("Û BODY");
-            gotoxy(4, 19); cprintf("Û NETWORK");
-            gotoxy(4, 20); cprintf("Û SENSORS");
-            gotoxy(4, 22); cprintf("'B'-BACK");
-            textbackground(2);
-            gotoxy(45, 12); cprintf(">> USE ARROW KEYS OR");
-            gotoxy(45, 13); cprintf("   W/A/S/D FOR SELECTION");
-            gotoxy(45, 15); cprintf(">> 'C'-CONFIRMATION");
-            gotoxy(45, 17); cprintf(">> 'E'- EXIT");
-            f = 0;
-        }
-
-        for (i = 0; i <= 8; i++) {
-            gotoxy(4, 12 + (i));
-            if (i == ch - 1) textcolor(11);
-            else    textcolor(1);
-            cprintf("Û");
-        }
-    }
 }
 
+void displayFeaturesMenu() {
+    int choice = 1;
+    drawFeaturesMenuUI(choice);
+
+    while (true) {
+        char k = getch();
+        if ((k == '2' || k == '4' || k == 'w' || k == 'a' || k == 'W' || k == 'A' || k == 72 || k == 75) && choice > 1) {
+            choice--;
+        } else if ((k == '5' || k == '6' || k == 's' || k == 'd' || k == 'S' || k == 'D' || k == 80 || k == 77) && choice < 9) {
+            choice++;
+        } else if (k == 'c' || k == 'C' || k == 13) {
+            drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
+            switch (choice) {
+                case 1: displayProcessorInfo(); break;
+                case 2: displayOSInfo(); break;
+                case 3: displayMemoryInfo(); break;
+                case 4: displayBatteryInfo(); break;
+                case 5: displayCameraInfo(); break;
+                case 6: displayDisplayInfo(); break;
+                case 7: displayBodyInfo(); break;
+                case 8: displayNetworkInfo(); break;
+                case 9: displaySensorsInfo(); break;
+            }
+            drawFeaturesMenuUI(choice);
+        } else if (k == 'e' || k == 'E') {
+            exitApplication();
+        } else if (k == 'b' || k == 'B') {
+            return;
+        }
+        drawFeaturesMenuUI(choice);
+    }
+}
 void displayProcessorInfo() {
     drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
     displayTextArt("processor", 15, 4, 10, 6);
-    drawImage("data\\images\\pro.im", 15, 33);
-    drawText("data\\text\\pro.dat", 14, 5);
+    drawImage("data/images/pro.im", 15, 33);
+    drawText("data/text/pro.dat", 14, 5);
     getch();
 }
 
@@ -881,59 +779,8 @@ void displayOSInfo() {
     drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
     displayTextArt("os", 35, 4, 10, 6);
-    drawImage("data\\images\\os.im", 10, 30);
-    drawText("data\\text\\os.dat", 14, 5);
-    getch();
-}
-
-void displayBatteryInfo() {
-    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
-    displayTextArt("battery", 20, 4, 10, 6);
-    drawImage("data\\images\\bat.im");
-    drawText("data\\text\\bat.dat", 14, 9);
-    getch();
-}
-
-void displayCameraInfo() {
-    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
-    displayTextArt("camera", 23, 4, 10, 6);
-    drawImage("data\\images\\cam.im", 15, 32, 13);
-    drawText("data\\text\\cam.dat", 14, 8);
-    getch();
-}
-
-void displayDisplayInfo() {
-    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
-    displayTextArt("display", 20, 4, 10, 6);
-    drawText("data\\text\\disp.dat");
-    getch();
-}
-
-void displayBodyInfo() {
-    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
-    displayTextArt("body", 29, 4, 10, 6);
-    drawText("data\\text\\body.dat", 14, 9);
-    getch();
-}
-
-void displayNetworkInfo() {
-    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
-    displayTextArt("network", 20, 4, 10, 6);
-    drawImage("data\\images\\net.im", 15, 25, 14);
-    drawText("data\\text\\net.dat");
-    getch();
-}
-
-void displaySensorsInfo() {
-    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
-    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
-    displayTextArt("sensors", 20, 4, 10, 6);
-    drawText("data\\text\\sens.dat", 14);
+    drawImage("data/images/os.im", 10, 30);
+    drawText("data/text/os.dat", 14, 5);
     getch();
 }
 
@@ -941,25 +788,77 @@ void displayMemoryInfo() {
     drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
     drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
     displayTextArt("memory", 23, 4, 10, 6);
-    drawImage("data\\images\\mem.im");
-    drawText("data\\text\\mem.dat", 14, 6);
+    drawImage("data/images/mem.im");
+    drawText("data/text/mem.dat", 14, 6);
+    getch();
+}
+
+void displayBatteryInfo() {
+    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+    displayTextArt("battery", 20, 4, 10, 6);
+    drawImage("data/images/bat.im");
+    drawText("data/text/bat.dat", 14, 9);
+    getch();
+}
+
+void displayCameraInfo() {
+    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+    displayTextArt("camera", 23, 4, 10, 6);
+    drawImage("data/images/cam.im", 15, 32, 13);
+    drawText("data/text/cam.dat", 14, 8);
+    getch();
+}
+
+void displayDisplayInfo() {
+    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+    displayTextArt("display", 20, 4, 10, 6);
+    drawText("data/text/disp.dat");
+    getch();
+}
+
+void displayBodyInfo() {
+    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+    displayTextArt("body", 29, 4, 10, 6);
+    drawText("data/text/body.dat", 14, 9);
+    getch();
+}
+
+void displayNetworkInfo() {
+    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+    displayTextArt("network", 20, 4, 10, 6);
+    drawImage("data/images/net.im", 15, 25, 14);
+    drawText("data/text/net.dat");
+    getch();
+}
+
+void displaySensorsInfo() {
+    drawFilledBox(3, 3, 78, 23, "Û", 6, 1);
+    drawBorderedBox(2, 2, 79, 10, "Û", 14, 1);
+    displayTextArt("sensors", 20, 4, 10, 6);
+    drawText("data/text/sens.dat", 14);
     getch();
 }
 
 void exitApplication() {
     textbackground(1);
     clrscr();
-    char s[10], s2[10], s3[10];
-    strcpy(s, "do");
-    strcpy(s2, "you");
-    strcpy(s3, "know");
-    int i = strlen(s) + strlen(s2) + strlen(s3) + 19;
+    const std::string s1 = "do";
+    const std::string s2 = "you";
+    const std::string s3 = "know";
+    int i = s1.length() + s2.length() + s3.length() + 19;
     drawBorderedBox(2, 2, 79, 24, "Û", 15, 0);
     i = (80 - i) / 2;
-    displayTextArt(s, i / 2, 4, 15, 1);
+    displayTextArt(s1, i / 2, 4, 15, 1);
     displayTextArt(s2, i / 2 + 15, 4, 15, 1);
     displayTextArt(s3, i / 2 + 36, 4, 15, 1);
-    drawText("data\\text\\dyk.dat", 15, 6, 12, 1, 1);
+    drawText("data/text/dyk.dat", 15, 6, 12, 1, 1);
     getch();
     exit(1);
 }
+
+} // namespace menu

@@ -1,29 +1,42 @@
 #ifndef PHONE_DATA_H
 #define PHONE_DATA_H
 
+#include <string>
+#include <vector>
+#include <array>
+
+namespace phone_data {
+
+#include <fstream>
+
 class Smartphone {
 public:
-    char company_name[40];
-    char model_name[40];
-    char processor[40];
-    char os[40];
-    char sensors[40];
+    std::string company_name;
+    std::string model_name;
+    std::string processor;
+    std::string os;
+    std::string sensors;
     int year;
     int battery;
-    int price[5];
-    int dimensions[3];
+    std::array<int, 5> price;
+    std::array<int, 3> dimensions;
     int weight;
-    int camera[2];
-    int memory[2];
+    std::array<int, 2> camera;
+    std::array<int, 2> memory;
     int network;
     float os_version;
+
+    void serialize(std::ofstream& fout) const;
+    void deserialize(std::ifstream& fin);
 };
 
 void promptForSmartphoneDetails(Smartphone &phone);
-void displaySmartphoneDetails(Smartphone phone);
-void displaySmartphonesByBrand(const char* brand);
+void displaySmartphoneDetails(const Smartphone& phone);
+void displaySmartphonesByBrand(const std::string& brand);
 void addSmartphoneRecord();
 void modifySmartphoneRecord();
-void displayFilteredSmartphones(int phone_indices[]);
+void displayFilteredSmartphones(const std::vector<int>& phone_indices);
+
+} // namespace phone_data
 
 #endif // PHONE_DATA_H

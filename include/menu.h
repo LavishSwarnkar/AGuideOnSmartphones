@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+namespace menu {
+
 void displayWelcomeScreen();
 void displayOverview();
 void displayGuidelines();
@@ -26,5 +28,7 @@ void displayBodyInfo();
 void displayNetworkInfo();
 void displaySensorsInfo();
 void exitApplication();
+
+} // namespace menu
 
 #endif // MENU_H
